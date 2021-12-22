@@ -6,7 +6,7 @@ namespace Musik_Affär.Models
     public class Review
     {
         public int ID { get; set; }
-        public int Grade { get; set; }
+        public byte Grade { get; set; }
         public Product Product { get; set; }
 
         [Required]

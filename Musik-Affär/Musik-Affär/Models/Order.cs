@@ -8,6 +8,8 @@ namespace Musik_Affär.Models
     public class Order
     {
         public int ID { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime OrderDate { get; set; }
         public List<Product> Products { get; set; }
 
