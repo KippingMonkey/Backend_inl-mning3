@@ -15,6 +15,15 @@ namespace Musik_Affär.Data
         {
         }
 
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    builder.Entity<Brand>(x => x
+        //           .ToTable("Products")
+        //           .Property(entity => entity.Name)
+        //           .HasColumnType("string")
+        //    );
+        //}
+
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Order> Orders { get; set; }
