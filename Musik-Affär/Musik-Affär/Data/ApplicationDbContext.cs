@@ -14,17 +14,24 @@ namespace Musik_Affär.Data
             : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Brand)
+                .HasConversion<string>();
 
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-        //    builder.Entity<Brand>(x => x
-        //           .ToTable("Products")
-        //           .Property(entity => entity.Name)
-        //           .HasColumnType("string")
-        //    );
-        //}
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Color)
+                .HasConversion<string>();
 
-        public DbSet<Brand> Brands { get; set; }
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Category)
+                .HasConversion<string>();
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }

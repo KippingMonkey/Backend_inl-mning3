@@ -5,9 +5,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Skapa</h1>
 
-<h4>Product</h4>
+<h4>Produkt</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,12 +20,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="Product.Category" class="control-label"></label>
-                <input asp-for="Product.Category" class="form-control" />
+                <select asp-for="Product.Category" class="form-control" 
+                asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
+                <option value="">Välj Kategori</option></select>
                 <span asp-validation-for="Product.Category" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Color" class="control-label"></label>
-                <input asp-for="Product.Color" class="form-control" />
+                <select asp-for="Product.Color" class="form-control"
+                asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
+                <option value="">Välj Färg</option>></select>
                 <span asp-validation-for="Product.Color" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -37,6 +41,13 @@
                 <label asp-for="Product.Weight" class="control-label"></label>
                 <input asp-for="Product.Weight" class="form-control" />
                 <span asp-validation-for="Product.Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Brand" class="control-label"></label>
+                <select asp-for="Product.Brand" class="form-control"
+                asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
+                <option value="">Välj Tillverkare</option>></select>
+                <span asp-validation-for="Product.Brand" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -10,7 +10,7 @@ using Musik_Affär.Data;
 namespace Musik_Affär.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211229095650_init")]
+    [Migration("20211229183117_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -236,22 +236,6 @@ namespace Musik_Affär.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Musik_Affär.Models.Brand", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Brands");
-                });
-
             modelBuilder.Entity("Musik_Affär.Models.Cart", b =>
                 {
                     b.Property<int>("ID")
@@ -298,11 +282,9 @@ namespace Musik_Affär.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BrandID")
+                    b.Property<int>("Brand")
+                        .HasMaxLength(55)
                         .HasColumnType("int");
-
-                    b.Property<string>("BrandName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Category")
                         .HasMaxLength(55)
@@ -323,8 +305,6 @@ namespace Musik_Affär.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("BrandID");
 
                     b.ToTable("Products");
                 });
@@ -456,15 +436,6 @@ namespace Musik_Affär.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Musik_Affär.Models.Product", b =>
-                {
-                    b.HasOne("Musik_Affär.Models.Brand", "Brand")
-                        .WithMany()
-                        .HasForeignKey("BrandID");
-
-                    b.Navigation("Brand");
                 });
 
             modelBuilder.Entity("Musik_Affär.Models.Review", b =>

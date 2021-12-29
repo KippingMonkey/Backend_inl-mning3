@@ -20,15 +20,10 @@ namespace Musik_Affär.Pages.Products
         }
 
         public IList<Product> Product { get;set; }
-        public string BrandName { get; set; }
 
         public async Task OnGetAsync()
         {
             Product = await _context.Products.ToListAsync();
-
-            BrandName = _context.Products
-                        .Include(p => p.Brand.Name)
-                        .ToString();
         }
     }
 }

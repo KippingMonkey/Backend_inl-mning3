@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int}"
 @model Musik_Affär.Pages.Products.EditModel
 
 @{
@@ -21,12 +21,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Product.Category" class="control-label"></label>
-                <input asp-for="Product.Category" class="form-control" />
+                <select asp-for="Product.Category" class="form-control"></select>
                 <span asp-validation-for="Product.Category" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Color" class="control-label"></label>
-                <input asp-for="Product.Color" class="form-control" />
+                <select asp-for="Product.Color" class="form-control"></select>
                 <span asp-validation-for="Product.Color" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,6 +38,11 @@
                 <label asp-for="Product.Weight" class="control-label"></label>
                 <input asp-for="Product.Weight" class="form-control" />
                 <span asp-validation-for="Product.Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Brand" class="control-label"></label>
+                <select asp-for="Product.Brand" class="form-control"></select>
+                <span asp-validation-for="Product.Brand" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -47,16 +47,21 @@ namespace Musik_Affär.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Brands",
+                name: "Products",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: true),
+                    Category = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: true),
+                    Color = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
+                    Price = table.Column<decimal>(type: "money", nullable: false),
+                    Weight = table.Column<float>(type: "real", nullable: false),
+                    Brand = table.Column<int>(type: "int", maxLength: 55, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Brands", x => x.ID);
+                    table.PrimaryKey("PK_Products", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,26 +210,28 @@ namespace Musik_Affär.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Reviews",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: true),
-                    Category = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: true),
-                    Color = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
-                    Price = table.Column<decimal>(type: "money", nullable: false),
-                    Weight = table.Column<float>(type: "real", nullable: false),
-                    BrandName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BrandID = table.Column<int>(type: "int", nullable: true)
+                    Grade = table.Column<byte>(type: "tinyint", nullable: false),
+                    ProductID = table.Column<int>(type: "int", nullable: true),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.ID);
+                    table.PrimaryKey("PK_Reviews", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Products_Brands_BrandID",
-                        column: x => x.BrandID,
-                        principalTable: "Brands",
+                        name: "FK_Reviews_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Products_ProductID",
+                        column: x => x.ProductID,
+                        principalTable: "Products",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -275,33 +282,6 @@ namespace Musik_Affär.Migrations
                         principalTable: "Products",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Reviews",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Grade = table.Column<byte>(type: "tinyint", nullable: false),
-                    ProductID = table.Column<int>(type: "int", nullable: true),
-                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reviews", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Reviews_AspNetUsers_UserID",
-                        column: x => x.UserID,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reviews_Products_ProductID",
-                        column: x => x.ProductID,
-                        principalTable: "Products",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -364,11 +344,6 @@ namespace Musik_Affär.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_BrandID",
-                table: "Products",
-                column: "BrandID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reviews_ProductID",
                 table: "Reviews",
                 column: "ProductID");
@@ -419,9 +394,6 @@ namespace Musik_Affär.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Brands");
         }
     }
 }
