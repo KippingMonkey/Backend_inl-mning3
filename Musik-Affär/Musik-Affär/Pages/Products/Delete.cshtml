@@ -11,7 +11,7 @@
 <div>
     <h4>Produkt</h4>
     <hr />
-    <dl class="row">
+  @*  <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Product.Name)
         </dt>
@@ -55,4 +55,62 @@
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>
-</div>
+</div>*@
+<table class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Brand)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Product.Score)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Product.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Product.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Product.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Product.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Product.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Product.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Product.Score)
+            </td>
+        </tr>
+    </tbody>
+</table>
+ <form method="post">
+        <input type="hidden" asp-for="Product.ID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>

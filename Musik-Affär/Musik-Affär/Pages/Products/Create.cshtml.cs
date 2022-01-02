@@ -13,9 +13,9 @@ namespace Musik_Affär.Pages.Products
 {
     public class CreateModel : PageModel
     {
-        private readonly Musik_Affär.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CreateModel(Musik_Affär.Data.ApplicationDbContext context)
+        public CreateModel(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -30,12 +30,24 @@ namespace Musik_Affär.Pages.Products
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id, Product product)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+            
+            //uses the product variable(forminput) to set the new object.
+            
+            Product.Name = product.Name;
+            Product.Category = Enum.GetName(typeof(Product.Type), int.Parse(product.Category));
+            //uses two parameters typeof(enum),numeric value of enum
+            Product.Color = Enum.GetName(typeof(Product.Style), int.Parse(product.Color));
+            Product.Price = product.Price;
+            Product.Weight = product.Weight;
+            Product.Brand = Enum.GetName(typeof(Product.Manufacturer), int.Parse(product.Brand));
+
+
 
             _context.Products.Add(Product);
             await _context.SaveChangesAsync();

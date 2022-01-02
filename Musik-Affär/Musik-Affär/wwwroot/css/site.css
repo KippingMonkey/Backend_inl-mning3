@@ -1,11 +1,45 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;600&display=swap');
+
+/* General
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
 }
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: 'Open Sans', sans-serif;
+}
+h1 {
+    font-weight: 700;
+}
+h2 {
+    font-weight: 500;
+}
+p {
+    font-weight: 500;
+}
+th {
+    text-align: left;
+    font-weight: 700;
+}
+
+/* Layout page
+-------------------------------------------------- */
+.nav-link li{
+    display:inline;
+}
+/* Store Index page
+-------------------------------------------------- */
+.Welcome {
+    text-align: center;
+}
+
 
 /* Provide sufficient contrast against white background */
 a {
@@ -18,11 +52,7 @@ a {
   border-color: #1861ac;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -53,15 +83,7 @@ button.accept-policy {
 
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
 .footer {
   position: absolute;
   bottom: 0;
