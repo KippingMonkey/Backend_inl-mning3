@@ -9,7 +9,7 @@ namespace Musik_Affär.Models
     public class Cart
     {
         public int ID { get; set; }
-        public List<Product> Products { get; set; }
+        public IEnumerable<Product> Products { get; set; }
 
         [Required]
         public string UserID { get; set; }

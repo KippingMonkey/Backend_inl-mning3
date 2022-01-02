@@ -10,8 +10,8 @@ using Musik_Affär.Data;
 namespace Musik_Affär.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211229213319_enum2string2")]
-    partial class enum2string2
+    [Migration("20211230221550_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -298,6 +298,7 @@ namespace Musik_Affär.Migrations
                         .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(55)
                         .HasColumnType("nvarchar(55)");
 

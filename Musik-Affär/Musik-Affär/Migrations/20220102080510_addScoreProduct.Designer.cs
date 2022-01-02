@@ -10,8 +10,8 @@ using Musik_Affär.Data;
 namespace Musik_Affär.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211229183551_brand2string")]
-    partial class brand2string
+    [Migration("20220102080510_addScoreProduct")]
+    partial class addScoreProduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -288,19 +288,25 @@ namespace Musik_Affär.Migrations
                         .HasColumnType("nvarchar(55)");
 
                     b.Property<string>("Category")
+                        .IsRequired()
                         .HasMaxLength(55)
                         .HasColumnType("nvarchar(55)");
 
                     b.Property<string>("Color")
+                        .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(55)
                         .HasColumnType("nvarchar(55)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
 
                     b.Property<float>("Weight")
                         .HasColumnType("real");

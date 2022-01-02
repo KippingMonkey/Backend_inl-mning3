@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Musik_Affär.Models
 {
+    
     public class Product
     {
         public enum Manufacturer
@@ -33,9 +34,9 @@ namespace Musik_Affär.Models
 
         public enum Type
         {
-            Elekriskt,
+            Klassisk,
             Akustisk,
-            Dobro,
+            Elektrisk,
             Bas,
             Baryton,
         }
@@ -62,11 +63,15 @@ namespace Musik_Affär.Models
         [Display(Name = "Vikt")]
         public float Weight { get; set; }
 
+        [Display(Name = "Betyg")]
+        public double Score { get; set; } = 0.0;
+
         [MaxLength(55)]
         [Display(Name = "Märke")]
         public Manufacturer Brand { get; set; }
 
-        public List<Order> Orders { get; set; }
-        public List<Cart> Carts { get; set; }
+        public IEnumerable<Order> Orders { get; set; }
+        public IEnumerable<Cart> Carts { get; set; }
+        public IEnumerable<Review> Reviews { get; set; }
     }
 }

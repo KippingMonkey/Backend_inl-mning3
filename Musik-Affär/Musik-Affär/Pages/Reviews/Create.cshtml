@@ -5,9 +5,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Betygsätt produkt</h1>
 
-<h4>Review</h4>
+<h4>Välj produkt och betyg. Klicka sedan på skapa</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,13 +15,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Review.Grade" class="control-label"></label>
-                <input asp-for="Review.Grade" class="form-control" />
+                <input asp-for="Review.Grade" class="form-control" max="5" min="1" />
                 <span asp-validation-for="Review.Grade" class="text-danger"></span>
             </div>
-            <div class="form-group">
+           @* <div class="form-group">
                 <label asp-for="Review.UserID" class="control-label"></label>
-                <select asp-for="Review.UserID" class ="form-control" asp-items="ViewBag.UserID"></select>
-            </div>
+                <input asp-for="Review.UserID" class ="form-control" value=""/>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -10,8 +10,8 @@ using Musik_Affär.Data;
 namespace Musik_Affär.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211229213646_noNullProduct")]
-    partial class noNullProduct
+    [Migration("20220101214128_bringbackLists")]
+    partial class bringbackLists
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -445,7 +445,7 @@ namespace Musik_Affär.Migrations
             modelBuilder.Entity("Musik_Affär.Models.Review", b =>
                 {
                     b.HasOne("Musik_Affär.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("ProductID");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
@@ -472,6 +472,11 @@ namespace Musik_Affär.Migrations
                         .HasForeignKey("ProductsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Musik_Affär.Models.Product", b =>
+                {
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

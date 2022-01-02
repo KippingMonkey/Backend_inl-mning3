@@ -303,6 +303,9 @@ namespace Musik_Affär.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
+
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 

@@ -11,7 +11,7 @@ namespace Musik_Affär.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime OrderDate { get; set; }
-        public List<Product> Products { get; set; }
+        public IEnumerable<Product> Products { get; set; }
 
         [Required]
         public string UserID { get; set; }

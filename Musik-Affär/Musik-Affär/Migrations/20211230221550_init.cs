@@ -52,12 +52,12 @@ namespace Musik_Affär.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: true),
-                    Category = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: true),
-                    Color = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Price = table.Column<decimal>(type: "money", nullable: false),
                     Weight = table.Column<float>(type: "real", nullable: false),
-                    Brand = table.Column<int>(type: "int", maxLength: 55, nullable: false)
+                    Brand = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false)
                 },
                 constraints: table =>
                 {
