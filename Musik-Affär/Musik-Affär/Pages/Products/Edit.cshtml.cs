@@ -13,15 +13,19 @@ namespace Musik_Affär.Pages.Products
 {
     public class EditModel : PageModel
     {
-        private readonly Musik_Affär.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public EditModel(Musik_Affär.Data.ApplicationDbContext context)
+        public EditModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
         public Product Product { get; set; }
+        [BindProperty]
+        public string SelectedColor { get; set; }
+        public string SelectedCategory { get; set; }
+        public string SelectedBrand { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -31,6 +35,12 @@ namespace Musik_Affär.Pages.Products
             }
 
             Product = await _context.Products.FirstOrDefaultAsync(m => m.ID == id);
+
+            SelectedBrand = Product.Brand;
+            SelectedColor = Product.Color;
+            SelectedCategory = Product.Category;
+
+
 
             if (Product == null)
             {
