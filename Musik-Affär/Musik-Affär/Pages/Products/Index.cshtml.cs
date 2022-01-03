@@ -36,18 +36,18 @@ namespace Musik_Affär.Pages.Products
         private const string categoryColumn = "Kategori";
         private const string colorColumn = "Färg";
         private const string priceColumn = "Pris";
-        private const string weightColumn = "Vikt";
         private const string brandColumn = "Märke";
         private const string scoreColumn = "Betyg";
 
         private const string ascendingColumn = "Stigande";
         private const string descendingColumn = "Fallande";
 
-        private string[] sortColumns = { nameColumn, categoryColumn, colorColumn, priceColumn, weightColumn, brandColumn, scoreColumn };
+        private string[] sortColumns = { nameColumn, categoryColumn, colorColumn, priceColumn, brandColumn, scoreColumn };
         private string[] directions = { ascendingColumn, descendingColumn };
 
         [FromQuery]
         public string SortColumn { get; set; }
+        [FromQuery]
         public string Direction { get; set; }
         public SelectList SortColumnList { get; set; }
         public SelectList DirectionList { get; set; }
@@ -59,11 +59,11 @@ namespace Musik_Affär.Pages.Products
 
             // Start by filtering for only contacts belonging to the logged-in user.
             //var query = _context.Products.Where(c => c.User.Id == accessControl.LoggedInUserID).AsNoTracking();
-            var query = _context.Products.Select(p=>p);
+            var query = _context.Products.Select( p => p ).AsNoTracking();
 
             if (SearchTerm != null)
             {
-                query.Where(c =>
+                query = query.Where(c =>
                     c.Name.ToLower().Contains(SearchTerm.ToLower()) ||
                     c.Category.ToLower().Contains(SearchTerm.ToLower()) ||
                     c.Color.ToLower().Contains(SearchTerm.ToLower()) ||
@@ -75,19 +75,27 @@ namespace Musik_Affär.Pages.Products
             {
                 if (SortColumn == nameColumn)
                 {
-                    query = query.OrderByDescending(c => c.Name);
+                    query = (Direction == "Fallande") ? query.OrderByDescending(c => c.Name) : query.OrderBy(c => c.Name);
                 }
                 else if (SortColumn == categoryColumn)
                 {
-                    query.OrderBy(c => c.Category);
+                    query = (Direction == "Fallande") ? query.OrderByDescending(c => c.Category) : query.OrderBy(c => c.Category);
                 }
                 else if (SortColumn == colorColumn)
                 {
-                    query.OrderBy(c => c.Color);
+                    query = (Direction == "Fallande") ? query.OrderByDescending(c => c.Color) : query.OrderBy(c => c.Color);
                 }
                 else if (SortColumn == brandColumn)
                 {
-                    query.OrderBy(c => c.Brand);
+                    query = (Direction == "Fallande") ? query.OrderByDescending(c => c.Brand) : query.OrderBy(c => c.Brand);
+                }
+                else if (SortColumn == priceColumn)
+                {
+                    query = (Direction == "Fallande") ? query.OrderByDescending(c => c.Price) : query.OrderBy(c => c.Price);
+                }
+                else if (SortColumn == scoreColumn)
+                {
+                    query = (Direction == "Fallande") ? query.OrderByDescending(c => c.Score) : query.OrderBy(c => c.Score);
                 }
             }
 

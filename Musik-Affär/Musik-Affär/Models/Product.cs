@@ -63,9 +63,6 @@ namespace Musik_Affär.Models
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Vikt")]
-        public float Weight { get; set; } = 0;
-
         [Display(Name = "Betyg")]
         public double? Score { get; set; } = 0.0;
 

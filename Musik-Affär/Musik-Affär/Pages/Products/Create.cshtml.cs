@@ -44,7 +44,6 @@ namespace Musik_Affär.Pages.Products
             //uses two parameters typeof(enum),numeric value of enum
             Product.Color = Enum.GetName(typeof(Product.Style), int.Parse(product.Color));
             Product.Price = product.Price;
-            Product.Weight = product.Weight;
             Product.Brand = Enum.GetName(typeof(Product.Manufacturer), int.Parse(product.Brand));
 
 

@@ -14,11 +14,14 @@
                 <td><input type="search" name="SearchTerm" id="SearchTerm" value="@Model.SearchTerm" placeholder="Vad letar du efter?"></td>
             </tr>
             <tr>
-                <th><label for="SortColumn">Sort by</label></th>
+                <th><label for="SortColumn">Sortera efter:</label></th>
                 <td>
                     <select asp-for="SortColumn" asp-items="Model.SortColumnList">
                         <option value="">Välj Filter</option>
                     </select>
+                </td>
+                <th><label for="Direction">Ordning:</label></th>
+                <td>
                     <select asp-for="Direction" asp-items="Model.DirectionList">
                          <option value="">Välj Ordning</option>
                     </select>
@@ -47,9 +50,6 @@
                 @Html.DisplayNameFor(model => model.Products[0].Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Products[0].Weight)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Products[0].Brand)
             </th>
              <th>
@@ -74,9 +74,6 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Brand)
             </td>
             <td>
@@ -85,6 +82,7 @@
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Ändra</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Detaljer</a> |
+                <a asp-page="./Reviews/Create" asp-route-id="@item.ID">Lägg till Betyg</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ID">Ta Bort</a>
             </td>
         </tr>
