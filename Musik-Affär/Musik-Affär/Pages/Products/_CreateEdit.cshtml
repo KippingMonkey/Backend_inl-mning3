@@ -1,0 +1,45 @@
+﻿
+@model Musik_Affär.Models.Product
+
+<hr />
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="val-text"></div>
+        <div class="form-element">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="val-text"></span>
+        </div>
+        <div class="form-element">
+            <label asp-for="Category" class="form-label"></label>
+            <select asp-for="Category" class="form-control" 
+            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
+            <option value="">Välj Kategori</option></select>
+            <span asp-validation-for="Category" class="val-text"></span>
+        </div>
+        <div class="form-element">
+            <label asp-for="Color" class="form-label"></label>
+            <select asp-for="Color" class="form-control"
+            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
+            <option value="">Välj Färg</option>></select>
+            <span asp-validation-for="Color" class="val-text"></span>
+        </div>
+        <div class="form-element">
+            <label asp-for="Price" class="form-label"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="val-text"></span>
+        </div>
+        <div class="form-element">
+            <label asp-for="Brand" class="form-label"></label>
+            <select asp-for="Brand" class="form-control"
+            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
+            <option value="">Välj Tillverkare</option>></select>
+            <span asp-validation-for="Brand" class="val-text"></span>
+        </div>
+        <div class="form-element">
+            <input type="submit" value="Skapa" class="val-text" />
+        </div>
+    </form>
+<div>
+    <a asp-page="Index">Tillbaka till produkter</a>
+</div>
+

@@ -5,50 +5,11 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Ändra</h1>
+<h1>Ändra produktdetaljer</h1>
 
-<h4>Produkt</h4>
-<hr />
-<form method="post">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div class="form-element">
-        <label asp-for="Product.Name" class="form-label"></label>
-        <input asp-for="Product.Name" class="form-control" />
-        <span asp-validation-for="Product.Name" class="val-text"></span>
-    </div>
-    <div class="form-element">
-        <label asp-for="Product.Category" class="form-label"></label>
-        <select asp-for="Product.Category" class="form-control" 
-        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
-        <option value="">@Model.SelectedCategory</option></select>
-        <span asp-validation-for="Product.Category" class="val-text"></span>
-    </div>
-    <div class="form-element">
-        <label asp-for="Product.Color" class="form-label" name="color"></label>
-        <select asp-for="Product.Color" class="form-control"
-        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
-        <option value="">@Model.SelectedColor</option></select>
-        <span asp-validation-for="Product.Color" class="val-text"></span>
-    </div>
-    <div class="form-element">
-        <label asp-for="Product.Price" class="form-label"></label>
-        <input asp-for="Product.Price" class="form-control" />
-        <span asp-validation-for="Product.Price" class="val-text"></span>
-    </div>
-    <div class="form-element">
-        <label asp-for="Product.Brand" class="form-label"></label>
-        <select asp-for="Product.Brand" class="form-control"
-        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
-        <option value="">@Model.SelectedBrand</option>></select>
-        <span asp-validation-for="Product.Brand" class="val-text"></span>
-    </div>
-    <div class="form-element">
-        <input type="submit" value="Skapa" class="submit-btn" />
-    </div>
-</form>
-<div>
-    <a asp-page="./Index">Tillbaka till produkter</a>
-</div>
+<h4>Justera värden efter behov nedan</h4>
+
+<partial name="_CreateEdit" for="Product" />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

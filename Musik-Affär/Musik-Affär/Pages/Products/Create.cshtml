@@ -7,47 +7,7 @@
 
 <h1>Skapa ny produkt</h1>
 
-<hr />
-    <form method="post">
-        <div asp-validation-summary="ModelOnly" class="val-text"></div>
-        <div class="form-element">
-            <label asp-for="Product.Name" class="form-label"></label>
-            <input asp-for="Product.Name" class="form-control" />
-            <span asp-validation-for="Product.Name" class="val-text"></span>
-        </div>
-        <div class="form-element">
-            <label asp-for="Product.Category" class="form-label"></label>
-            <select asp-for="Product.Category" class="form-control" 
-            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
-            <option value="">Välj Kategori</option></select>
-            <span asp-validation-for="Product.Category" class="val-text"></span>
-        </div>
-        <div class="form-element">
-            <label asp-for="Product.Color" class="form-label"></label>
-            <select asp-for="Product.Color" class="form-control"
-            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
-            <option value="">Välj Färg</option>></select>
-            <span asp-validation-for="Product.Color" class="val-text"></span>
-        </div>
-        <div class="form-element">
-            <label asp-for="Product.Price" class="form-label"></label>
-            <input asp-for="Product.Price" class="form-control" />
-            <span asp-validation-for="Product.Price" class="val-text"></span>
-        </div>
-        <div class="form-element">
-            <label asp-for="Product.Brand" class="form-label"></label>
-            <select asp-for="Product.Brand" class="form-control"
-            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
-            <option value="">Välj Tillverkare</option>></select>
-            <span asp-validation-for="Product.Brand" class="val-text"></span>
-        </div>
-        <div class="form-element">
-            <input type="submit" value="Skapa" class="val-text" />
-        </div>
-    </form>
-<div>
-    <a asp-page="Index">Tillbaka till produkter</a>
-</div>
+<partial name="_CreateEdit" for="Product" />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
