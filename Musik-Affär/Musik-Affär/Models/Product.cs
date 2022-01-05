@@ -10,35 +10,36 @@ namespace Musik_Affär.Models
     {
         public enum Manufacturer
         {
+            Epiphone,
             Fender,
-            Yamaha,
-            PRS,
+            Gibson,
             HartWood,
             Ibanez,
+            PRS,
             Squier,
-            Epiphone,
-            Gibson
+            Yamaha,
         }
 
         public enum Style
         {
-            Lila,
             Blå,
-            Vit,
-            Svart,
-            Trä,
+            Lila,
             Mahogny,
+            Röd,
+            Svart,
             Sunset,
-            Röd
+            Trä,
+            Vit
         }
 
         public enum Type
         {
-            Klassisk,
             Akustisk,
-            Elektrisk,
-            Bas,
+            Klassisk,
             Baryton,
+            Bas,
+            Elektrisk,
+            
         }
 
         
@@ -63,9 +64,10 @@ namespace Musik_Affär.Models
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Betyg")]
+        [Display(Name = "SnittBetyg")]
         public double? Score { get; set; } = 0.0;
 
+        [Required]
         [MaxLength(55)]
         [Display(Name = "Märke")]
         public string Brand { get; set; }

@@ -28,12 +28,20 @@ th {
     text-align: left;
     font-weight: 700;
 }
+li{
+    display:inline;
+    margin: 10px;
+}
+
+.crud-links{
+    font-size:smaller;
+}
 
 /* Layout page
 -------------------------------------------------- */
-.nav-link li{
-    display:inline;
-}
+
+
+
 /* Store Index page
 -------------------------------------------------- */
 .Welcome {

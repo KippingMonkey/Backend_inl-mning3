@@ -1,36 +1,62 @@
-﻿@page
+﻿@page "{id:int}"
 @model Musik_Affär.Pages.Reviews.CreateModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Betygsätt produkt</h1>
+<h1>Betygsätt den här produkten</h1>
 
-<h4>Välj produkt och betyg. Klicka sedan på skapa</h4>
+<h4>Välj ett betyg, 1-5 och klicka sedan på skapa</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Review.Grade" class="control-label"></label>
-                <input asp-for="Review.Grade" class="form-control" max="5" min="1" />
-                <span asp-validation-for="Review.Grade" class="text-danger"></span>
-            </div>
-           @* <div class="form-group">
-                <label asp-for="Review.UserID" class="control-label"></label>
-                <input asp-for="Review.UserID" class ="form-control" value=""/>
-            </div>*@
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<table class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Brand)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Product.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Product.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Product.Brand)
+            </td>
+        </tr>
+    </tbody>
+</table>
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="val-text"></div>
+        <div class="form-element">
+            <label asp-for="Review.Grade" class="form-label"></label>
+            <input asp-for="Review.Grade" class="form-control" type="number" max="5" min="1" />
+            <span asp-validation-for="Review.Grade" class="val-text"></span>
+        </div>
+        @* <div class="form-element">
+            <label asp-for="Review.UserID" class="form-label"></label>
+            <input asp-for="Review.UserID" class ="form-control" value=""/>
+        </div>*@
+        <div class="form-element">
+            <input type="submit" value="Skapa" class="submit-btn" />
+        </div>
+    </form>
+
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="../Products/Index">Tillbaka till produkter</a>
 </div>
 
 @section Scripts {

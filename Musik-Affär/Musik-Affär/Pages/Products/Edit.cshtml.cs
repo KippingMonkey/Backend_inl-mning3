@@ -27,6 +27,8 @@ namespace Musik_Affär.Pages.Products
         public string SelectedCategory { get; set; }
         public string SelectedBrand { get; set; }
 
+        public SelectList test { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -34,13 +36,11 @@ namespace Musik_Affär.Pages.Products
                 return NotFound();
             }
 
-            Product = await _context.Products.FirstOrDefaultAsync(m => m.ID == id);
+            Product = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
 
             SelectedBrand = Product.Brand;
             SelectedColor = Product.Color;
             SelectedCategory = Product.Category;
-
-
 
             if (Product == null)
             {
@@ -49,8 +49,6 @@ namespace Musik_Affär.Pages.Products
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

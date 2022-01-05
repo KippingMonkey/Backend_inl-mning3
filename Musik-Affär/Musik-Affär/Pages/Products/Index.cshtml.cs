@@ -21,14 +21,8 @@ namespace Musik_Affär.Pages.Products
             _context = context;
         }
 
-        //public IList<Product> Product { get;set; }
-
-
-        //public async Task OnGetAsync()
-        //{
-        //    Product = await _context.Products.ToListAsync();
-        //}
         public IList<Product> Products { get; set; }
+
         [FromQuery]
         public string SearchTerm { get; set; }
 
@@ -49,6 +43,7 @@ namespace Musik_Affär.Pages.Products
         public string SortColumn { get; set; }
         [FromQuery]
         public string Direction { get; set; }
+
         public SelectList SortColumnList { get; set; }
         public SelectList DirectionList { get; set; }
 
@@ -57,8 +52,6 @@ namespace Musik_Affär.Pages.Products
             SortColumnList = new SelectList(sortColumns);
             DirectionList = new SelectList(directions);
 
-            // Start by filtering for only contacts belonging to the logged-in user.
-            //var query = _context.Products.Where(c => c.User.Id == accessControl.LoggedInUserID).AsNoTracking();
             var query = _context.Products.Select( p => p ).AsNoTracking();
 
             if (SearchTerm != null)
@@ -98,9 +91,7 @@ namespace Musik_Affär.Pages.Products
                     query = (Direction == "Fallande") ? query.OrderByDescending(c => c.Score) : query.OrderBy(c => c.Score);
                 }
             }
-
             Products = await query.ToListAsync();
         }
-
     }
 }

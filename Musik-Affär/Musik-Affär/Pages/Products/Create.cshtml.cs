@@ -37,16 +37,12 @@ namespace Musik_Affär.Pages.Products
                 return Page();
             }
             
-            //uses the product variable(forminput) to set the new object.
-            
             Product.Name = product.Name;
             Product.Category = Enum.GetName(typeof(Product.Type), int.Parse(product.Category));
             //uses two parameters typeof(enum),numeric value of enum
             Product.Color = Enum.GetName(typeof(Product.Style), int.Parse(product.Color));
             Product.Price = product.Price;
             Product.Brand = Enum.GetName(typeof(Product.Manufacturer), int.Parse(product.Brand));
-
-
 
             _context.Products.Add(Product);
             await _context.SaveChangesAsync();
