@@ -56,13 +56,25 @@
             <td> @Html.DisplayFor(modelItem => item.Score)</td>
            
             <td>
+                    
+            if (@Model.LoggedIn)
+            {
                 <form method="post" style="display:inline">
-                    <button type="submit" class="submit-btn">Köp</button>
+                <button type="submit" class="submit-btn">Köp</button>
                 </form>
                 <a asp-page="./Edit" asp-route-id="@item.ID" class="crud-links">Ändra</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID"  class="crud-links">Detaljer</a> |
                 <a asp-page="../Reviews/Create" asp-route-id="@item.ID"  class="crud-links">Sätt Betyg</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ID"  class="crud-links">Ta Bort</a>
+            }
+                    
+                @*<form method="post" style="display:inline">
+                    <button type="submit" class="submit-btn">Köp</button>
+                </form>
+                <a asp-page="./Edit" asp-route-id="@item.ID" class="crud-links">Ändra</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID"  class="crud-links">Detaljer</a> |
+                <a asp-page="../Reviews/Create" asp-route-id="@item.ID"  class="crud-links">Sätt Betyg</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID"  class="crud-links">Ta Bort</a>*@
             </td>
         </tr>
 }

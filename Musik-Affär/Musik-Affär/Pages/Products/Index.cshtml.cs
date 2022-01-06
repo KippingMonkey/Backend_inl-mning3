@@ -15,10 +15,12 @@ namespace Musik_Affär.Pages.Products
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly AccessControl _accessControl;
 
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(ApplicationDbContext context, AccessControl accessControl)
         {
             _context = context;
+            _accessControl = accessControl;
         }
 
         public IList<Product> Products { get; set; }
@@ -39,6 +41,8 @@ namespace Musik_Affär.Pages.Products
         private string[] sortColumns = { nameColumn, categoryColumn, colorColumn, priceColumn, brandColumn, scoreColumn };
         private string[] directions = { ascendingColumn, descendingColumn };
 
+        public bool LoggedIn { get; set; }
+
         [FromQuery]
         public string SortColumn { get; set; }
         [FromQuery]
@@ -49,6 +53,11 @@ namespace Musik_Affär.Pages.Products
 
         public async Task OnGetAsync()
         {
+            if (_accessControl.LoggedIn)
+            {
+                LoggedIn = true;
+            }
+            
             SortColumnList = new SelectList(sortColumns);
             DirectionList = new SelectList(directions);
 
@@ -63,7 +72,7 @@ namespace Musik_Affär.Pages.Products
                     c.Brand.ToLower().Contains(SearchTerm.ToLower())
                 );
             }
-
+             
             if (SortColumn != null)
             {
                 if (SortColumn == nameColumn)
@@ -92,6 +101,10 @@ namespace Musik_Affär.Pages.Products
                 }
             }
             Products = await query.ToListAsync();
+        }
+        public async Task OnPostAsync()
+        {
+
         }
     }
 }
