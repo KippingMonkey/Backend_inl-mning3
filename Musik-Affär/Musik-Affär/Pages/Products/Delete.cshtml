@@ -8,9 +8,9 @@
 <h1>Produktnamn: @Model.Product.Name</h1>
 
 <h3>Är du säker på att du vill ta bort den här produkten?</h3>
-
+<hr />
 <partial name="_DetailsDelete" for="Product"/>
-
+<hr />
  <form method="post">
         <input type="hidden" asp-for="Product.ID" />
         <input type="submit" value="Ta bort" class="submit-btn" /> |

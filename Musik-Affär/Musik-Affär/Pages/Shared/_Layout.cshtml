@@ -9,18 +9,18 @@
 <body>
     <header>
         <div>
-            <ul class="nav-links">
-                <li style="display:inline">
-                    <a asp-area="" asp-page="/Index">Start</a>
+            <ul class="nav-links" style="display:inline">
+                <li>
+                    <a class="nav-link" asp-area="" asp-page="/Index">Start</a>
                 </li>
-                <li style="display:inline">
-                    <a asp-page="/Products/Index">Produkter</a>
+                <li>
+                    <a class="nav-link" asp-page="/Products/Index">Produkter</a>
                 </li>
                 @*<li>
                     <a asp-page="/Reviews/Index">Recensioner</a>
                 </li>*@
-                 <li style="display:inline">
-                    <a asp-page="/Carts/Index">Kundvagn</a>
+                 <li>
+                    <a class="nav-link" asp-page="/Carts/Index">Kundvagn</a>
                 </li>
             </ul>
             <partial name="_LoginPartial" />
