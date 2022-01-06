@@ -53,7 +53,7 @@ namespace Musik_Affär.Pages.Products
 
         public async Task OnGetAsync()
         {
-            if (_accessControl.LoggedIn)
+            if ( _accessControl.LoggedIn)
             {
                 LoggedIn = true;
             }
