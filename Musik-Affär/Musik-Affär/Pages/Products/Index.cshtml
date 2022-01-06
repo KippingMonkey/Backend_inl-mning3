@@ -1,5 +1,6 @@
 ﻿@page
 @model Musik_Affär.Pages.Products.IndexModel
+@using Microsoft.AspNetCore.Authorization
 
 @{
     ViewData["Title"] = "Index";
@@ -54,28 +55,18 @@
             <td> @Html.DisplayFor(modelItem => item.Price)</td>
             <td> @Html.DisplayFor(modelItem => item.Brand)</td>
             <td> @Html.DisplayFor(modelItem => item.Score)</td>
-           
+           @if (User.Identity.IsAuthenticated)
+           {
             <td>
-                    
-            if (ViewContext.HttpContext.User.)
-            {
                 <form method="post" style="display:inline">
-                <button type="submit" class="submit-btn">Köp</button>
-                </form>
-                <a asp-page="./Edit" asp-route-id="@item.ID" class="crud-links">Ändra</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID"  class="crud-links">Detaljer</a> |
-                <a asp-page="../Reviews/Create" asp-route-id="@item.ID"  class="crud-links">Sätt Betyg</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID"  class="crud-links">Ta Bort</a>
-            }
-                    
-                @*<form method="post" style="display:inline">
                     <button type="submit" class="submit-btn">Köp</button>
                 </form>
                 <a asp-page="./Edit" asp-route-id="@item.ID" class="crud-links">Ändra</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID"  class="crud-links">Detaljer</a> |
                 <a asp-page="../Reviews/Create" asp-route-id="@item.ID"  class="crud-links">Sätt Betyg</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID"  class="crud-links">Ta Bort</a>*@
+                <a asp-page="./Delete" asp-route-id="@item.ID"  class="crud-links">Ta Bort</a>
             </td>
+           }
         </tr>
 }
     </tbody>
