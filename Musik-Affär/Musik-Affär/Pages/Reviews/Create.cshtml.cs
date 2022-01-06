@@ -59,7 +59,7 @@ namespace Musik_Affär.Pages.Reviews
             _context.Reviews.Add(Review);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("Products/Index");
+            return RedirectToPage("../Products/Index");
         }
     }
 }

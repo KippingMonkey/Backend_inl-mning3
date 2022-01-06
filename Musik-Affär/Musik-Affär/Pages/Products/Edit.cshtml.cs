@@ -27,7 +27,6 @@ namespace Musik_Affär.Pages.Products
         public string SelectedCategory { get; set; }
         public string SelectedBrand { get; set; }
 
-        public SelectList test { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -49,19 +48,27 @@ namespace Musik_Affär.Pages.Products
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
-            _context.Attach(Product).State = EntityState.Modified;
-
+            var dbProduct = await _context.Products.FindAsync(id);
+            if (dbProduct == null)
+            {
+                return NotFound();
+            }
             try
             {
+                dbProduct.Name = Product.Name;
+                dbProduct.Price = Product.Price;
+                dbProduct.Brand = Enum.GetName(typeof(Product.Manufacturer), int.Parse(Product.Brand));
+                dbProduct.Category = Enum.GetName(typeof(Product.Type), int.Parse(Product.Category));
+                dbProduct.Color = Enum.GetName(typeof(Product.Style), int.Parse(Product.Color));
                 await _context.SaveChangesAsync();
             }
+
             catch (DbUpdateConcurrencyException)
             {
                 if (!ProductExists(Product.ID))
