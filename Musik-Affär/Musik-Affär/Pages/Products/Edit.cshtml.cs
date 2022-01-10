@@ -66,6 +66,8 @@ namespace Musik_Affär.Pages.Products
                 dbProduct.Brand = Enum.GetName(typeof(Product.Manufacturer), int.Parse(Product.Brand));
                 dbProduct.Category = Enum.GetName(typeof(Product.Type), int.Parse(Product.Category));
                 dbProduct.Color = Enum.GetName(typeof(Product.Style), int.Parse(Product.Color));
+
+
                 await _context.SaveChangesAsync();
             }
 

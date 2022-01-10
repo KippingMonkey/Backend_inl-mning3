@@ -15,12 +15,10 @@ namespace Musik_Affär.Pages.Products
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        //private readonly AccessControl _accessControl;
 
-        public IndexModel(ApplicationDbContext context /*AccessControl accessControl*/)
+        public IndexModel(ApplicationDbContext context )
         {
             _context = context;
-            //_accessControl = accessControl;
         }
 
         public IList<Product> Products { get; set; }
@@ -53,11 +51,6 @@ namespace Musik_Affär.Pages.Products
 
         public async Task OnGetAsync()
         {
-            //if ( _accessControl.LoggedIn)
-            //{
-            //    LoggedIn = true;
-            //}
-            
             SortColumnList = new SelectList(sortColumns);
             DirectionList = new SelectList(directions);
 
@@ -102,9 +95,9 @@ namespace Musik_Affär.Pages.Products
             }
             Products = await query.ToListAsync();
         }
-        //public async Task OnPostAsync()
-        //{
+        public async Task OnPostAsync()
+        {
 
-        //}
+        }
     }
 }

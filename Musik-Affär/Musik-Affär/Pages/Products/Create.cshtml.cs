@@ -30,7 +30,7 @@ namespace Musik_Affär.Pages.Products
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync(int id, Product product)
+        public async Task<IActionResult> OnPostAsync(Product product)
         {
             if (!ModelState.IsValid)
             {

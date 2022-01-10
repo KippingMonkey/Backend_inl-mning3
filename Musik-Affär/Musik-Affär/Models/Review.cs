@@ -8,14 +8,15 @@ namespace Musik_Affär.Models
     {
         public int ID { get; set; }
         [Display(Name ="Betyg")]
-        public byte Grade { get; set; }
+        public byte Grade { get; set; } = 0;    
 
         [Display(Name = "Produkt")]
+        public int ProductID { get; set; }
         public Product Product { get; set; }
 
         [Required]
+        [Display(Name ="Användare")]
         public string UserID { get; set; }
-        [Display(Name = "Användare")]
         public IdentityUser User { get; set; }
     }
 }
