@@ -113,9 +113,12 @@ namespace Musik_Affär.Pages.Products
             }
             else
             {
-                Cart newCart = new Cart
+                Cart newCart = new()
                 {
                     User = user,
+                    UserID = user.Id,
+                    Products = new()
+                    
                 };
                 newCart.Products.Add(dbProduct);
                 _context.Carts.Add(newCart);

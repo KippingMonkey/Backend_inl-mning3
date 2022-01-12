@@ -35,6 +35,7 @@ namespace Musik_Affär.Pages.Carts
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
             
+
             Cart = await _context.Carts.Include(c => c.User)
                                        .Include(c => c.Products)
                                        .Where(c => c.UserID == user.Id)
