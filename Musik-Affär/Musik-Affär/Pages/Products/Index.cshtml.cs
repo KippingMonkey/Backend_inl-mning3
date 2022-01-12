@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,10 +16,12 @@ namespace Musik_Affär.Pages.Products
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public IndexModel(ApplicationDbContext context )
+        public IndexModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IList<Product> Products { get; set; }
@@ -95,9 +98,33 @@ namespace Musik_Affär.Pages.Products
             }
             Products = await query.ToListAsync();
         }
-        public async Task OnPostAsync()
-        {
 
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            var dbProduct = await _context.Products.Include(p => p.Carts).FirstAsync(p => p.ID == id);
+
+            IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if(_context.Carts.Where(c => c.User == user).Any())
+            {
+                var myCart = await _context.Carts.Include("Products").FirstAsync(p => p.UserID == user.Id);
+                myCart.Products.Add(dbProduct);
+                //_context.Carts.Attach(myCart).Collection(c => c.Products).IsModified = true;
+            }
+            else
+            {
+                Cart newCart = new Cart
+                {
+                    User = user,
+                };
+                newCart.Products.Add(dbProduct);
+                _context.Carts.Add(newCart);
+            }
+            
+            await _context.SaveChangesAsync();
+
+            //await OnGetAsync();
+            return RedirectToPage("Index");
         }
     }
 }

@@ -72,8 +72,8 @@ namespace Musik_Affär.Models
         [Display(Name = "Märke")]
         public string Brand { get; set; }
 
-        public IEnumerable<Order> Orders { get; set; }
-        public IEnumerable<Cart> Carts { get; set; }
-        public IEnumerable<Review> Reviews { get; set; }
+        public List<Order> Orders { get; set; }
+        public List<Cart> Carts { get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }

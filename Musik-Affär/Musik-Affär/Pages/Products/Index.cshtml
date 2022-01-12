@@ -58,7 +58,7 @@
            @if (User.Identity.IsAuthenticated)
            {
             <td>
-                <form method="post" style="display:inline">
+                <form method="post" style="display:inline" asp-route-id="@item.ID">
                     <button type="submit" class="submit-btn">Köp</button>
                 </form>
                 <a asp-page="./Edit" asp-route-id="@item.ID" class="crud-links">Ändra</a> |

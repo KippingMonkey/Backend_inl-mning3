@@ -37,15 +37,11 @@ namespace Musik_Affär.Pages.Reviews
         public async Task<IActionResult> OnGet(int? id)
         {
             Product =  await _context.Products.SingleAsync(m => m.ID == id);
-            //CreateEmptyReview(Product);
-
-            //ViewData["UserID"] = new SelectList(_context.Users, "Id", "Id");
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int id, Review review)
         {
-            //CreateEmptyReview(Product);
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
             review.Product = await _context.Products.FindAsync(id);
@@ -78,13 +74,7 @@ namespace Musik_Affär.Pages.Reviews
             //{
             //    return Page();
             //}
-
-            //Product.Score = NewScore;
-            //Test för att ändra score i products men det funkar inte för mig
            
-            //_context.Products.Add(Product);
-
-
             return RedirectToPage("../Products/Index");
         }
     }

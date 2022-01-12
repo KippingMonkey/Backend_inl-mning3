@@ -5,31 +5,44 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Min Kundkorg</h1>
+<h2>@Model.Cart.User.Email</h2>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table" style="width:100%">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cart[0].User)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Product.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Product.Category)</th>
+            <th>@Html.DisplayNameFor(model => model.Product.Color)</th>
+            <th>@Html.DisplayNameFor(model => model.Product.Brand)</th>
+            <th>@Html.DisplayNameFor(model => model.Product.Price)</th>
+            <th>Qty</th>
+            <th>Total Price</th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model.Cart) {
+       <tbody>
+@for(int i = 0; i < Model.Cart.Products.Count(); i++) {
         <tr>
+            <td> @Html.DisplayFor(model => model.Cart.Products[i].Name )</td>
+            <td> @Html.DisplayFor(model => model.Cart.Products[i].Category )</td>
+            <td> @Html.DisplayFor(model => model.Cart.Products[i].Color )</td>
+            <td> @Html.DisplayFor(model => model.Cart.Products[i].Brand )</td>
+            <td> @Html.DisplayFor(model => model.Cart.Products[i].Price )</td>
+            <td> @Html.DisplayFor(model => model.Cart.Products[i].Name )</td>
+            
+           @*@if (User.Identity.IsAuthenticated)
+           {
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                <form method="post" style="display:inline" asp-route-id="@item.ID">
+                    <button type="submit" class="submit-btn">Köp</button>
+                </form>
+                <a asp-page="./Edit" asp-route-id="@item.ID" class="crud-links">Ändra</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID"  class="crud-links">Detaljer</a> |
+                <a asp-page="../Reviews/Create" asp-route-id="@item.ID"  class="crud-links">Sätt Betyg</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID"  class="crud-links">Ta Bort</a>
             </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
+           }*@
         </tr>
 }
     </tbody>
