@@ -49,7 +49,7 @@ namespace Musik_Affär.Pages.Reviews
           
             if (Product.Score != 0)
             {
-                NewScore = _context.Reviews.Where(r => r.ProductID == id).Average(g => g.Grade);
+                NewScore = Math.Round(_context.Reviews.Where(r => r.ProductID == id).Average(g => g.Grade), 1);
                 Product.Score = NewScore;
             }
             else
@@ -66,7 +66,10 @@ namespace Musik_Affär.Pages.Reviews
             Review.ProductID = review.ProductID;
             Review.Product = review.Product;
 
-            _context.Products.Attach(Product).Property(p => p.Score).IsModified = true;
+            Product.Reviews = new();
+            //Product.Reviews.Add(review);
+
+            //_context.Products.Attach(Product).Property(p => p.Score).IsModified = true;
             _context.Reviews.Add(Review);
             await _context.SaveChangesAsync();
 

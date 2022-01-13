@@ -16,9 +16,9 @@
             <th>@Html.DisplayNameFor(model => model.Product.Color)</th>
             <th>@Html.DisplayNameFor(model => model.Product.Brand)</th>
             <th>@Html.DisplayNameFor(model => model.Product.Price)</th>
-            <th>Qty</th>
-            <th>Total Price</th>
-            <th></th>
+            <th>Antal</th>
+            <th>Totalt</th>
+            <th>Ändra</th>
         </tr>
     </thead>
        <tbody>
@@ -28,22 +28,27 @@
             <td> @Html.DisplayFor(model => model.Cart.Products[i].Category )</td>
             <td> @Html.DisplayFor(model => model.Cart.Products[i].Color )</td>
             <td> @Html.DisplayFor(model => model.Cart.Products[i].Brand )</td>
-            <td> @Html.DisplayFor(model => model.Cart.Products[i].Price )</td>
-            <td> @Html.DisplayFor(model => model.Cart.Products[i].Name )</td>
-            
-           @*@if (User.Identity.IsAuthenticated)
-           {
+            <td> @Html.DisplayFor(model => model.Cart.Products[i].Price ) SEK</td>
+            <td> @Html.DisplayFor(model => model.ProductQty )</td>
+            <td> @Html.DisplayFor(model => model.TotalProductPrice)</td>
             <td>
-                <form method="post" style="display:inline" asp-route-id="@item.ID">
-                    <button type="submit" class="submit-btn">Köp</button>
+                <form method="post" style="display:inline" asp-route-id="@Model.Cart.Products[i].ID">
+                    <button type="submit" class="submit-btn">+</button>
+                    <button type="submit" class="submit-btn">-</button>
+                    <button type="submit" class="submit-btn">Ta bort</button>
                 </form>
-                <a asp-page="./Edit" asp-route-id="@item.ID" class="crud-links">Ändra</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID"  class="crud-links">Detaljer</a> |
-                <a asp-page="../Reviews/Create" asp-route-id="@item.ID"  class="crud-links">Sätt Betyg</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID"  class="crud-links">Ta Bort</a>
+                <a asp-page="./Details" asp-route-id="@Model.Cart.Products[i]"  class="crud-links">Detaljer</a>
             </td>
-           }*@
         </tr>
-}
+}       <tr></tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Totalt: </td>
+            <td>@Html.DisplayFor(model => model.TotalProductQty) produkter</td>
+            <td> @Html.DisplayFor(model => model.TotalOrderPrice) SEK</td>
+        </tr>
     </tbody>
 </table>

@@ -2,6 +2,7 @@
 @model Musik_Affär.Pages.Products.IndexModel
 @using Microsoft.AspNetCore.Authorization
 
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -52,7 +53,7 @@
             <td> @Html.DisplayFor(modelItem => item.Name)</td>
             <td> @Html.DisplayFor(modelItem => item.Category)</td>
             <td> @Html.DisplayFor(modelItem => item.Color)</td>
-            <td> @Html.DisplayFor(modelItem => item.Price)</td>
+            <td> @Html.DisplayFor(modelItem => item.Price) SEK</td>
             <td> @Html.DisplayFor(modelItem => item.Brand)</td>
             <td> @Html.DisplayFor(modelItem => item.Score)</td>
            @if (User.Identity.IsAuthenticated)

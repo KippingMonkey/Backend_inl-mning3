@@ -27,9 +27,13 @@ namespace Musik_Affär.Pages.Carts
         [BindProperty]
         public Product Product { get; set; }
 
-        public int ProductQty { get; set; }
-        public decimal TotalPrice { get; set; }
-        public IEnumerable<Product> UniqueProducts { get; set; }
+        public int ProductQty { get; set; } = 1;
+        public int TotalProductQty { get; set; } = 5;
+        public decimal TotalProductPrice { get; set; } = 0;
+        public decimal TotalOrderPrice { get; set; } = 0;
+
+        public List<Product> OrderedProducts { get; set; }
+
 
         public async Task OnGetAsync()
         {
@@ -41,7 +45,11 @@ namespace Musik_Affär.Pages.Carts
                                        .Where(c => c.UserID == user.Id)
                                        .FirstOrDefaultAsync();
 
-            UniqueProducts = Cart.Products.Distinct();
+            //OrderedProducts = Cart.Products.OrderBy(p => p.Name).ToList();
+            //Om man vill lista produkterna i bokstavsordning, glöm inte att byta i cshtml-filen
+            
+            TotalProductQty = Cart.Products.Count();
+            TotalOrderPrice = Cart.Products.Select(p => p.Price).Sum();
 
         }
     }

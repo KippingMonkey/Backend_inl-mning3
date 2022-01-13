@@ -109,7 +109,6 @@ namespace Musik_Affär.Pages.Products
             {
                 var myCart = await _context.Carts.Include("Products").FirstAsync(p => p.UserID == user.Id);
                 myCart.Products.Add(dbProduct);
-                //_context.Carts.Attach(myCart).Collection(c => c.Products).IsModified = true;
             }
             else
             {
