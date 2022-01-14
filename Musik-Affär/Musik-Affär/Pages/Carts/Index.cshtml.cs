@@ -28,9 +28,12 @@ namespace Musik_Affär.Pages.Carts
         [BindProperty]
         public Product Product { get; set; }
 
-        public int ProductQty { get; set; } = 1;
+        [BindProperty]
+        public IList<CartItem> CartItems{ get; set; }
+
+        //public int ProductQty { get; set; } = 1;
         public int TotalProductQty { get; set; } = 5;
-        public decimal TotalProductPrice { get; set; } = 0;
+        public IList<decimal> TotalProductPrices { get; set; }
         public decimal TotalOrderPrice { get; set; } = 0;
 
         public List<Product> OrderedProducts { get; set; }
@@ -41,21 +44,24 @@ namespace Musik_Affär.Pages.Carts
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
             
-                Cart = await _context.Carts.Include(c => c.User)
-                                           .Where(c => c.UserID == user.Id)
-                                           .FirstOrDefaultAsync();
+            Cart = await _context.Carts.Include(c => c.User)
+                                       .Where(c => c.UserID == user.Id)
+                                       .FirstOrDefaultAsync();
+
+            CartItems = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.CartID == Cart.ID).ToListAsync();
+
+            TotalProductPrices = CartItems.Select(ci => ci.Quantity * ci.Product.Price).ToList();
+            TotalProductQty = CartItems.Sum(ci => ci.Quantity);
+            TotalOrderPrice = TotalProductPrices.Sum();
 
 
-            //TotalProductQty = Cart.Products.Count();
-            //    TotalOrderPrice = Cart.Products.Select(p => p.Price).Sum();
-           
-           
-           
+
+
 
             //OrderedProducts = Cart.Products.OrderBy(p => p.Name).ToList();
             //Om man vill lista produkterna i bokstavsordning, glöm inte att byta i cshtml-filen
-            
-           
+
+
 
         }
     }
