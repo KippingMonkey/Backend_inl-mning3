@@ -9,8 +9,8 @@ namespace Musik_Affär.Models
     public class Cart
     {
         public int ID { get; set; }
-        public int ProductsID { get; set; }
-        public List<Product> Products { get; set; }
+
+        //public List<Product> Products { get; set; }
 
         [Required]
         public string UserID { get; set; }

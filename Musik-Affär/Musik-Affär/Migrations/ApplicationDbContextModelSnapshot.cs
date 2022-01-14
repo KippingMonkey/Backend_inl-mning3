@@ -241,9 +241,6 @@ namespace Musik_Affär.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ProductsID")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserID")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -253,6 +250,31 @@ namespace Musik_Affär.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("Musik_Affär.Models.CartProductQty", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasAlternateKey("ProductId", "CartId");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("CartProductQty");
                 });
 
             modelBuilder.Entity("Musik_Affär.Models.Order", b =>
@@ -430,6 +452,25 @@ namespace Musik_Affär.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Musik_Affär.Models.CartProductQty", b =>
+                {
+                    b.HasOne("Musik_Affär.Models.Cart", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Musik_Affär.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Musik_Affär.Models.Order", b =>

@@ -10,8 +10,8 @@ using Musik_Affär.Data;
 namespace Musik_Affär.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220101214023_removeLists")]
-    partial class removeLists
+    [Migration("20220114084152_addTable")]
+    partial class addTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,21 @@ namespace Musik_Affär.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("CartProduct", b =>
+                {
+                    b.Property<int>("CartsID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartsID", "ProductsID");
+
+                    b.HasIndex("ProductsID");
+
+                    b.ToTable("CartProduct");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -239,6 +254,31 @@ namespace Musik_Affär.Migrations
                     b.ToTable("Carts");
                 });
 
+            modelBuilder.Entity("Musik_Affär.Models.CartProductQty", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasAlternateKey("ProductId", "CartId");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("CartProductQty");
+                });
+
             modelBuilder.Entity("Musik_Affär.Models.Order", b =>
                 {
                     b.Property<int>("ID")
@@ -272,9 +312,6 @@ namespace Musik_Affär.Migrations
                         .HasMaxLength(55)
                         .HasColumnType("nvarchar(55)");
 
-                    b.Property<int?>("CartID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(55)
@@ -290,20 +327,13 @@ namespace Musik_Affär.Migrations
                         .HasMaxLength(55)
                         .HasColumnType("nvarchar(55)");
 
-                    b.Property<int?>("OrderID")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
-                    b.Property<float>("Weight")
-                        .HasColumnType("real");
+                    b.Property<double?>("Score")
+                        .HasColumnType("float");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CartID");
-
-                    b.HasIndex("OrderID");
 
                     b.ToTable("Products");
                 });
@@ -318,7 +348,7 @@ namespace Musik_Affär.Migrations
                     b.Property<byte>("Grade")
                         .HasColumnType("tinyint");
 
-                    b.Property<int?>("ProductID")
+                    b.Property<int>("ProductID")
                         .HasColumnType("int");
 
                     b.Property<string>("UserID")
@@ -332,6 +362,36 @@ namespace Musik_Affär.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.Property<int>("OrdersID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsID")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrdersID", "ProductsID");
+
+                    b.HasIndex("ProductsID");
+
+                    b.ToTable("OrderProduct");
+                });
+
+            modelBuilder.Entity("CartProduct", b =>
+                {
+                    b.HasOne("Musik_Affär.Models.Cart", null)
+                        .WithMany()
+                        .HasForeignKey("CartsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Musik_Affär.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -396,6 +456,25 @@ namespace Musik_Affär.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Musik_Affär.Models.CartProductQty", b =>
+                {
+                    b.HasOne("Musik_Affär.Models.Cart", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Musik_Affär.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Musik_Affär.Models.Order", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
@@ -407,22 +486,13 @@ namespace Musik_Affär.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Musik_Affär.Models.Product", b =>
-                {
-                    b.HasOne("Musik_Affär.Models.Cart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CartID");
-
-                    b.HasOne("Musik_Affär.Models.Order", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderID");
-                });
-
             modelBuilder.Entity("Musik_Affär.Models.Review", b =>
                 {
                     b.HasOne("Musik_Affär.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID");
+                        .WithMany("Reviews")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
@@ -435,14 +505,24 @@ namespace Musik_Affär.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Musik_Affär.Models.Cart", b =>
+            modelBuilder.Entity("OrderProduct", b =>
                 {
-                    b.Navigation("Products");
+                    b.HasOne("Musik_Affär.Models.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Musik_Affär.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Musik_Affär.Models.Order", b =>
+            modelBuilder.Entity("Musik_Affär.Models.Product", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

@@ -56,7 +56,7 @@ namespace Musik_Affär.Migrations
                     Category = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false),
                     Color = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Price = table.Column<decimal>(type: "money", nullable: false),
-                    Weight = table.Column<float>(type: "real", nullable: false),
+                    Score = table.Column<double>(type: "float", nullable: true),
                     Brand = table.Column<string>(type: "nvarchar(55)", maxLength: 55, nullable: false)
                 },
                 constraints: table =>
@@ -216,7 +216,7 @@ namespace Musik_Affär.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Grade = table.Column<byte>(type: "tinyint", nullable: false),
-                    ProductID = table.Column<int>(type: "int", nullable: true),
+                    ProductID = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -233,7 +233,7 @@ namespace Musik_Affär.Migrations
                         column: x => x.ProductID,
                         principalTable: "Products",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

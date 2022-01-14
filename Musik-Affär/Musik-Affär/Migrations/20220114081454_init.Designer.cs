@@ -10,8 +10,8 @@ using Musik_Affär.Data;
 namespace Musik_Affär.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220102220907_removeWeightProp")]
-    partial class removeWeightProp
+    [Migration("20220114081454_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -283,6 +283,7 @@ namespace Musik_Affär.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Brand")
+                        .IsRequired()
                         .HasMaxLength(55)
                         .HasColumnType("nvarchar(55)");
 
@@ -322,7 +323,7 @@ namespace Musik_Affär.Migrations
                     b.Property<byte>("Grade")
                         .HasColumnType("tinyint");
 
-                    b.Property<int?>("ProductID")
+                    b.Property<int>("ProductID")
                         .HasColumnType("int");
 
                     b.Property<string>("UserID")
@@ -445,7 +446,9 @@ namespace Musik_Affär.Migrations
                 {
                     b.HasOne("Musik_Affär.Models.Product", "Product")
                         .WithMany("Reviews")
-                        .HasForeignKey("ProductID");
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
