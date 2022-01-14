@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -21,7 +22,7 @@ namespace Musik_Affär.Pages.Carts
             _context = context;
             _userManager = userManager;
         }
-
+       
         public Cart Cart { get;set; }
 
         [BindProperty]
@@ -38,18 +39,23 @@ namespace Musik_Affär.Pages.Carts
         public async Task OnGetAsync()
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
-            
 
-            Cart = await _context.Carts.Include(c => c.User)
-                                       .Include(c => c.Products)
-                                       .Where(c => c.UserID == user.Id)
-                                       .FirstOrDefaultAsync();
+            
+                Cart = await _context.Carts.Include(c => c.User)
+                                           .Where(c => c.UserID == user.Id)
+                                           .FirstOrDefaultAsync();
+
+
+            //TotalProductQty = Cart.Products.Count();
+            //    TotalOrderPrice = Cart.Products.Select(p => p.Price).Sum();
+           
+           
+           
 
             //OrderedProducts = Cart.Products.OrderBy(p => p.Name).ToList();
             //Om man vill lista produkterna i bokstavsordning, glöm inte att byta i cshtml-filen
             
-            TotalProductQty = Cart.Products.Count();
-            TotalOrderPrice = Cart.Products.Select(p => p.Price).Sum();
+           
 
         }
     }

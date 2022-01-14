@@ -8,6 +8,7 @@ namespace Musik_Affär.Models
 {
     public class Cart
     {
+        //[Required, Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
         //public List<Product> Products { get; set; }

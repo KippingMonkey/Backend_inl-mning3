@@ -237,24 +237,27 @@ namespace Musik_Affär.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartProduct",
+                name: "CartItems",
                 columns: table => new
                 {
-                    CartsID = table.Column<int>(type: "int", nullable: false),
-                    ProductsID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductID = table.Column<int>(type: "int", nullable: false),
+                    CartID = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartProduct", x => new { x.CartsID, x.ProductsID });
+                    table.PrimaryKey("PK_CartItems", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_CartProduct_Carts_CartsID",
-                        column: x => x.CartsID,
+                        name: "FK_CartItems_Carts_CartID",
+                        column: x => x.CartID,
                         principalTable: "Carts",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CartProduct_Products_ProductsID",
-                        column: x => x.ProductsID,
+                        name: "FK_CartItems_Products_ProductID",
+                        column: x => x.ProductID,
                         principalTable: "Products",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -324,9 +327,14 @@ namespace Musik_Affär.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartProduct_ProductsID",
-                table: "CartProduct",
-                column: "ProductsID");
+                name: "IX_CartItems_CartID",
+                table: "CartItems",
+                column: "CartID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartItems_ProductID",
+                table: "CartItems",
+                column: "ProductID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_UserID",
@@ -372,7 +380,7 @@ namespace Musik_Affär.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CartProduct");
+                name: "CartItems");
 
             migrationBuilder.DropTable(
                 name: "OrderProduct");

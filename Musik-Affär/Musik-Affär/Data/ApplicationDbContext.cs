@@ -28,8 +28,7 @@ namespace Musik_Affär.Data
                 .Property(p => p.Category)
                 .HasConversion<string>();
 
-            modelBuilder.Entity<CartProductQty>()
-                        .HasAlternateKey(e => new { e.ProductId, e.CartId });
+           
 
             base.OnModelCreating(modelBuilder);
         }
@@ -39,6 +38,6 @@ namespace Musik_Affär.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<CartProductQty> CartProductQty { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
     }
 }

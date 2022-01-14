@@ -101,14 +101,31 @@ namespace Musik_Affär.Pages.Products
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            var dbProduct = await _context.Products.Include(p => p.Carts).FirstAsync(p => p.ID == id);
+            var dbProduct = await _context.Products.FirstAsync(p => p.ID == id);
 
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
             if(_context.Carts.Where(c => c.User == user).Any())
             {
-                var myCart = await _context.Carts.Include("Products").FirstAsync(p => p.UserID == user.Id);
-                myCart.Products.Add(dbProduct);
+                var myCart = await _context.Carts.FirstAsync(p => p.UserID == user.Id);
+                var cartItems = await _context.CartItems.Where(ci => ci.CartID == myCart.ID).ToListAsync();
+                if (cartItems.Where(ci => ci.ProductID == dbProduct.ID).Any())
+                {
+                    var myCartItem = cartItems.Where(ci => ci.ProductID == dbProduct.ID).Single();
+                    myCartItem.Quantity += 1;
+                }
+                else
+                {
+                    CartItem newItem = new()
+                    {
+                        CartID = myCart.ID,
+                        ProductID = dbProduct.ID,
+                        Quantity = 1
+                    };
+                    _context.CartItems.Add(newItem);
+                }
+                //var myItem = await _context.CartItem.Where(i => i.CartId == myCart.ID && i.ProductId == dbProduct.ID).SingleAsync();
+                //myItem.Qty++;
             }
             else
             {
@@ -116,13 +133,18 @@ namespace Musik_Affär.Pages.Products
                 {
                     User = user,
                     UserID = user.Id,
-                    Products = new()
-                    
                 };
-                newCart.Products.Add(dbProduct);
                 _context.Carts.Add(newCart);
+                await _context.SaveChangesAsync();
+                int newId = await _context.Carts.Select(c => c.ID).SingleAsync();
+                CartItem newItem = new()
+                {
+                    CartID = newId,
+                    ProductID = dbProduct.ID,
+                    Quantity = 1
+                };
+                _context.CartItems.Add(newItem);
             }
-            
             await _context.SaveChangesAsync();
 
             //await OnGetAsync();

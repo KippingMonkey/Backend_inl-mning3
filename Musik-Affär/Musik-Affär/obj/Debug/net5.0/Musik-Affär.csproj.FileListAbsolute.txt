@@ -173,3 +173,6 @@ C:\Users\User\source\repos\Backend_inl-mning3\Musik-Affär\Musik-Affär\obj\Debu
 C:\Users\User\source\repos\Backend_inl-mning3\Musik-Affär\Musik-Affär\obj\Debug\net5.0\Razor\Pages\Products\Index.cshtml.g.cs
 C:\Users\User\source\repos\Backend_inl-mning3\Musik-Affär\Musik-Affär\obj\Debug\net5.0\Razor\Pages\Products\_DetailsDelete.cshtml.g.cs
 C:\Users\User\source\repos\Backend_inl-mning3\Musik-Affär\Musik-Affär\obj\Debug\net5.0\Razor\Pages\Products\_CreateEdit.cshtml.g.cs
+C:\Users\User\source\repos\Backend_inl-mning3\Musik-Affär\Musik-Affär\bin\Debug\net5.0\System.Net.Http.Formatting.dll
+C:\Users\User\source\repos\Backend_inl-mning3\Musik-Affär\Musik-Affär\bin\Debug\net5.0\System.Web.Http.dll
+C:\Users\User\source\repos\Backend_inl-mning3\Musik-Affär\Musik-Affär\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
