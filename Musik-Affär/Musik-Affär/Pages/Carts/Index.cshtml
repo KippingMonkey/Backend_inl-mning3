@@ -37,7 +37,7 @@
                     <button type="submit" class="submit-btn">-</button>
                     <button type="submit" class="submit-btn">Ta bort</button>
                 </form>
-                <a asp-page="../Products/Details" asp-route-id="@Model.CartItems[i].Product"  class="crud-links">Detaljer</a>
+                <a asp-page="./Details" asp-route-id="@Model.CartItems[i].ProductID"  class="crud-links">Detaljer</a>
             </td>
         </tr>
 }       <tr></tr>

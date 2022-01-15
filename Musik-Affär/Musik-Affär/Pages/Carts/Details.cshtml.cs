@@ -12,14 +12,14 @@ namespace Musik_Affär.Pages.Carts
 {
     public class DetailsModel : PageModel
     {
-        private readonly Musik_Affär.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DetailsModel(Musik_Affär.Data.ApplicationDbContext context)
+        public DetailsModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public Cart Cart { get; set; }
+        public Product Product { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,10 +28,9 @@ namespace Musik_Affär.Pages.Carts
                 return NotFound();
             }
 
-            Cart = await _context.Carts
-                .Include(c => c.User).FirstOrDefaultAsync(m => m.ID == id);
+            Product = await _context.Products.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Cart == null)
+            if (Product == null)
             {
                 return NotFound();
             }
