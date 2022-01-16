@@ -32,10 +32,9 @@
             <td> @Html.DisplayFor(model => model.CartItems[i].Quantity )</td>
             <td> @Html.DisplayFor(model => model.TotalProductPrices[i])</td>
             <td>
-                <form method="post" style="display:inline" asp-route-id="@Model.CartItems[i].Product.ID">
-                    <button type="submit" class="submit-btn">+</button>
-                    <button type="submit" class="submit-btn">-</button>
-                    <button type="submit" class="submit-btn">Ta bort</button>
+                <form method="post" style="display:inline" asp-route-id="@Model.CartItems[i].ProductID">
+                    <button type="submit">+</button>
+                    
                 </form>
                 <a asp-page="./Details" asp-route-id="@Model.CartItems[i].ProductID"  class="crud-links">Detaljer</a>
             </td>

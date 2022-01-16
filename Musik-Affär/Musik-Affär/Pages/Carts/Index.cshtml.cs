@@ -31,6 +31,8 @@ namespace Musik_Affär.Pages.Carts
         [BindProperty]
         public IList<CartItem> CartItems{ get; set; }
 
+        public CartItem CartItem{ get; set; }
+
         //public int ProductQty { get; set; } = 1;
         public int TotalProductQty { get; set; } = 5;
         public IList<decimal> TotalProductPrices { get; set; }
@@ -42,7 +44,6 @@ namespace Musik_Affär.Pages.Carts
         public async Task OnGetAsync()
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
-
             
             Cart = await _context.Carts.Include(c => c.User)
                                        .Where(c => c.UserID == user.Id)
@@ -54,15 +55,23 @@ namespace Musik_Affär.Pages.Carts
             TotalProductQty = CartItems.Sum(ci => ci.Quantity);
             TotalOrderPrice = TotalProductPrices.Sum();
 
-
-
-
-
             //OrderedProducts = Cart.Products.OrderBy(p => p.Name).ToList();
             //Om man vill lista produkterna i bokstavsordning, glöm inte att byta i cshtml-filen
+        }
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
+            Cart = await _context.Carts.Include(c => c.User)
+                                       .Where(c => c.UserID == user.Id)
+                                       .FirstOrDefaultAsync();
 
+            CartItem = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.ProductID == id).FirstOrDefaultAsync();
 
+            CartItem.Quantity += 1;
+            await _context.SaveChangesAsync();
+            //return RedirectToPage("Index");
+            return RedirectToPage("Index");
         }
     }
 }
