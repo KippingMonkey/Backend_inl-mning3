@@ -75,38 +75,36 @@ namespace Musik_Affär.Pages.Carts
             //OrderedProducts = Cart.Products.OrderBy(p => p.Name).ToList();
             //Om man vill lista produkterna i bokstavsordning, glöm inte att byta i cshtml-filen
         }
-        //public async Task<IActionResult> OnPostAsync(int id)
-        //{
-        //    IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
+        public async Task<IActionResult> OnPostPlus(int id)
+        {
+            IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
-        //    Cart = await _context.Carts.Include(c => c.User)
-        //                               .Where(c => c.UserID == user.Id)
-        //                               .FirstOrDefaultAsync();
+            Cart = await _context.Carts.Include(c => c.User)
+                                       .Where(c => c.UserID == user.Id)
+                                       .FirstOrDefaultAsync();
 
-        //    CartItem = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.ProductID == id).FirstOrDefaultAsync();
+            CartItem = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.ProductID == id).FirstOrDefaultAsync();
 
-        //    CartItem.Quantity += 1;
-        //    await _context.SaveChangesAsync();
-        //    //return RedirectToPage("Index");
-        //    return RedirectToPage("Index");
-        //}
+            CartItem.Quantity += 1;
+            await _context.SaveChangesAsync();
+            return RedirectToPage("Index");
+        }
 
-        //public async Task<IActionResult> OnPostAsync(int id)
-        //{
-        //    IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
+        public async Task<IActionResult> OnPostMinus(int id)
+        {
+            IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
-        //    Cart = await _context.Carts.Include(c => c.User)
-        //                               .Where(c => c.UserID == user.Id)
-        //                               .FirstOrDefaultAsync();
+            Cart = await _context.Carts.Include(c => c.User)
+                                       .Where(c => c.UserID == user.Id)
+                                       .FirstOrDefaultAsync();
 
-        //    CartItem = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.ProductID == id).FirstOrDefaultAsync();
+            CartItem = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.ProductID == id).FirstOrDefaultAsync();
 
-        //    CartItem.Quantity -= 1;
-        //    await _context.SaveChangesAsync();
-        //    //return RedirectToPage("Index");
-        //    return RedirectToPage("Index");
-        //}
-        public async Task<IActionResult> OnPostAsync(int id)
+            CartItem.Quantity -= 1;
+            await _context.SaveChangesAsync();
+            return RedirectToPage("Index");
+        }
+        public async Task<IActionResult> OnPostDelete(int id)
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -118,7 +116,6 @@ namespace Musik_Affär.Pages.Carts
 
             _context.CartItems.Remove(CartItem);
             await _context.SaveChangesAsync();
-            //return RedirectToPage("Index");
             return RedirectToPage("Index");
         }
 

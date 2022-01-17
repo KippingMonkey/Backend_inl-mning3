@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.EntityFrameworkCore;
+
+@inject UserManager<IdentityUser> _userManager
+@inject ApplicationDbContext _context
+
+@{
+    ////var HttpContext = new HttpContext();
+    ////IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
+    //var Cart = await _context.Carts.Include(c => c.User)
+    //                                       .Where(c => c.UserID == user.Id)
+    //                                       .FirstOrDefaultAsync();
+                
+    //var CartItems = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.CartID == Cart.ID).ToListAsync();
+
+    //var TotalProductPrices = CartItems.Select(ci => ci.Quantity * ci.Product.Price).ToList();
+    //var TotalProductQty = CartItems.Sum(ci => ci.Quantity);
+  }
+
+
+<div>
+    @*<p>@TotalProductQty artiklar. Total kostnad: @TotalProductPrices</p>*@
+</div>
