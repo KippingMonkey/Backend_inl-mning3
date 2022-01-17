@@ -32,6 +32,7 @@ namespace Musik_Affär.Pages.Carts
         public IList<CartItem> CartItems{ get; set; }
 
         public CartItem CartItem{ get; set; }
+        public bool hasCart { get; set; }
 
         //public int ProductQty { get; set; } = 1;
         public int TotalProductQty { get; set; } = 5;
@@ -44,16 +45,32 @@ namespace Musik_Affär.Pages.Carts
         public async Task OnGetAsync()
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
-            
-            Cart = await _context.Carts.Include(c => c.User)
-                                       .Where(c => c.UserID == user.Id)
-                                       .FirstOrDefaultAsync();
 
-            CartItems = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.CartID == Cart.ID).ToListAsync();
+            hasCart = _context.Carts.Include(c => c.User).Where(c => c.UserID == user.Id).Any();
 
-            TotalProductPrices = CartItems.Select(ci => ci.Quantity * ci.Product.Price).ToList();
-            TotalProductQty = CartItems.Sum(ci => ci.Quantity);
-            TotalOrderPrice = TotalProductPrices.Sum();
+            if (hasCart)
+            {
+                Cart = await _context.Carts.Include(c => c.User)
+                                           .Where(c => c.UserID == user.Id)
+                                           .FirstOrDefaultAsync();
+                
+                CartItems = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.CartID == Cart.ID).ToListAsync();
+
+                TotalProductPrices = CartItems.Select(ci => ci.Quantity * ci.Product.Price).ToList();
+                TotalProductQty = CartItems.Sum(ci => ci.Quantity);
+                TotalOrderPrice = TotalProductPrices.Sum();
+            }
+            else
+            {
+                Cart newCart = new()
+                {
+                    User = user,
+                    UserID = user.Id,
+                };
+                _context.Carts.Add(newCart);
+                await _context.SaveChangesAsync();
+            }
+
 
             //OrderedProducts = Cart.Products.OrderBy(p => p.Name).ToList();
             //Om man vill lista produkterna i bokstavsordning, glöm inte att byta i cshtml-filen
