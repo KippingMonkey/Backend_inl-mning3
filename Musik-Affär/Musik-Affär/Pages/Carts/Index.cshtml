@@ -39,7 +39,7 @@
                     <button type="submit">-</button>
                 </form>
                  <form asp-page-handler="Delete" asp-page="Index" method="post" style="display:inline" asp-route-id="@Model.CartItems[i].ProductID">
-                    <button type="submit">-</button>
+                    <button type="submit">Ta bort</button>
                 </form>
                 <a asp-page="./Details" asp-route-id="@Model.CartItems[i].ProductID"  class="crud-links">Detaljer</a>
             </td>
