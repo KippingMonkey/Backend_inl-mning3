@@ -16,14 +16,18 @@
                 <li>
                     <a class="nav-link" asp-page="/Products/Index">Produkter</a>
                 </li>
-                <li>
-                    <a asp-page="/Reviews/Index">Mina Recensioner</a>
-                </li>
-                 <li>
-                    <a class="nav-link" asp-page="/Carts/Index">Min Kundvagn</a>
-                </li>
+                 @if (User.Identity.IsAuthenticated){
+                    <li>
+                        <a asp-page="/Reviews/Index">Mina Recensioner</a>
+                    </li>
+                     <li>
+                        <a class="nav-link" asp-page="/Carts/Index">Min Kundvagn</a>
+                        <partial name="_itemsInCart"/>
+                    </li>
+                }
+                    <li><partial name="_LoginPartial" /></li>
             </ul>
-            <partial name="_LoginPartial" />
+            
         </div>
     </header>
     <div class="container">

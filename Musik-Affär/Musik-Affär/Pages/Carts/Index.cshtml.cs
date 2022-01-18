@@ -22,14 +22,14 @@ namespace Musik_Affär.Pages.Carts
             _context = context;
             _userManager = userManager;
         }
-       
+        [BindProperty]
         public Cart Cart { get;set; }
 
         [BindProperty]
         public Product Product { get; set; }
 
         [BindProperty]
-        public IList<CartItem> CartItems{ get; set; }
+        public List<CartItem> CartItems { get; set; } = new List<CartItem>();
 
         public CartItem CartItem{ get; set; }
         public bool hasCart { get; set; }
@@ -45,7 +45,7 @@ namespace Musik_Affär.Pages.Carts
         public async Task OnGetAsync()
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
-
+            
             hasCart = _context.Carts.Include(c => c.User).Where(c => c.UserID == user.Id).Any();
 
             if (hasCart)
@@ -68,7 +68,7 @@ namespace Musik_Affär.Pages.Carts
                     UserID = user.Id,
                 };
                 _context.Carts.Add(newCart);
-                await _context.SaveChangesAsync();
+                 await _context.SaveChangesAsync();
             }
 
 
