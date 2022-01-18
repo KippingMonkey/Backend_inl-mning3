@@ -5,6 +5,11 @@
       "ProjectGuid": "ab512e0f-d492-4afd-af4f-6370c542ce19",
       "DisplayName": "Musik-Affär",
       "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 1

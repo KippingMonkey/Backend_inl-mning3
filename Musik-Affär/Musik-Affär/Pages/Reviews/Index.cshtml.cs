@@ -40,11 +40,20 @@ namespace Musik_Affär.Pages.Reviews
           
         }
 
-        public async Task<IActionResult> OnPostAsync(int id, byte grade)
+        public async Task<IActionResult> OnPostChange(int id, byte grade)
         {
             Review = await _context.Reviews.Where(r => r.ID == id).FirstOrDefaultAsync();
 
             Review.Grade = grade;
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("Index");
+        }
+        public async Task<IActionResult> OnPostDelete(int id)
+        {
+            Review = await _context.Reviews.Where(r => r.ID == id).FirstOrDefaultAsync();
+
+            _context.Reviews.Remove(Review);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("Index");

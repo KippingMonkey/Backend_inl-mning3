@@ -27,12 +27,14 @@
             <td> @Html.DisplayFor(modelItem => item.Product.Color)</td>
             <td> @Html.DisplayFor(modelItem => item.Product.Brand)</td>
             <td> @Html.DisplayFor(modelItem => item.Grade)</td>
-            <td><form method="post" asp-route-id="@item.ID">
-                    @* <div asp-validation-summary="ModelOnly" class="val-text"></div>*@
+            <td>
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="val-text"></div>
                     @*<label asp-for="@Model.Grade" class="form-label"></label>*@
                     <input asp-for="@Model.Grade" class="form-control" type="number" max="5" min="1" value="@item.Grade"/>
                     @*<span asp-validation-for="@item.Grade" class="val-text"></span>*@
-                    <button type="submit">OK</button>
+                    <button asp-page-handler="Change" asp-route-id="@item.ID" type="submit">✅</button>
+                    <button asp-page-handler="Delete" asp-route-id="@item.ID" type="submit">🗑️</button>
                 </form>
             </td>
         </tr>
