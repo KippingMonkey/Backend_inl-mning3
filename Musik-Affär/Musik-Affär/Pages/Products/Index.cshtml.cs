@@ -26,6 +26,10 @@ namespace Musik_Affär.Pages.Products
 
         public IList<Product> Products { get; set; }
 
+        public Review Review { get; set; }
+        public Product Product { get; set; }
+        public double NewScore { get; set; }
+
         [FromQuery]
         public string SearchTerm { get; set; }
 
@@ -58,6 +62,18 @@ namespace Musik_Affär.Pages.Products
             DirectionList = new SelectList(directions);
 
             var query = _context.Products.Select( p => p ).AsNoTracking();
+            int reviewQty = 0;
+
+            //foreach (var product in query)
+            //{
+            //    reviewQty = await _context.Reviews.Where(r => r.ProductID == product.ID).CountAsync();
+            //    NewScore = Math.Round((double)_context.Reviews.Where(r => r.ProductID == product.ID).Sum(p => p.Grade) / reviewQty, 1);
+            //    Product = await _context.Products.Where(p => p.ID == product.ID).FirstOrDefaultAsync();
+            //    product.Score = NewScore;
+            //    await _context.SaveChangesAsync();
+            //}
+
+            query = _context.Products.Select(p => p).AsNoTracking();
 
             if (SearchTerm != null)
             {

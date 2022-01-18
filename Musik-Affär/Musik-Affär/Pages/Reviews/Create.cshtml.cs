@@ -48,8 +48,7 @@ namespace Musik_Affär.Pages.Reviews
             Product = await _context.Products.FindAsync(id);
           
             if (Product.Score != 0)
-            {    //nedan får inte med det senast tillagda
-                //NewScore = Math.Round(_context.Reviews.Where(r => r.ProductID == id).Average(g => g.Grade), 1);
+            {    
                 int reviewQty = _context.Reviews.Where(r => r.ProductID == id).Count() + 1;
                 NewScore = Math.Round((double)(_context.Reviews.Where(r => r.ProductID == id).Sum(p => p.Grade) + review.Grade) / reviewQty, 1);
                 Product.Score = NewScore;

@@ -27,7 +27,10 @@ namespace Musik_Affär.Pages.Reviews
         [BindProperty]
         public Review Review { get;set; }
         [BindProperty]
-        public byte Grade { get;set; }
+        public byte Grade { get;set; } 
+
+        public double NewScore { get;set; }
+        public Product Product { get;set; }
 
         public async Task OnGetAsync()
         {
@@ -42,9 +45,14 @@ namespace Musik_Affär.Pages.Reviews
 
         public async Task<IActionResult> OnPostChange(int id, byte grade)
         {
-            Review = await _context.Reviews.Where(r => r.ID == id).FirstOrDefaultAsync();
-
+            Review = await _context.Reviews.Include(r => r.Product).Where(r => r.ID == id).FirstOrDefaultAsync();
             Review.Grade = grade;
+            await _context.SaveChangesAsync();
+
+            Reviews = await _context.Reviews.Include( r => r.Product).Where(r => r.ProductID == Review.ProductID).ToListAsync();
+            int reviewQty = Reviews.Count();
+            NewScore = Math.Round((double)Reviews.Sum(p => p.Grade) / reviewQty, 1);
+            Review.Product.Score = NewScore;
             await _context.SaveChangesAsync();
 
             return RedirectToPage("Index");
@@ -54,6 +62,13 @@ namespace Musik_Affär.Pages.Reviews
             Review = await _context.Reviews.Where(r => r.ID == id).FirstOrDefaultAsync();
 
             _context.Reviews.Remove(Review);
+            await _context.SaveChangesAsync();
+
+            Reviews = await _context.Reviews.Include(r => r.Product).Where(r => r.ProductID == Review.ProductID).ToListAsync();
+            int reviewQty = Reviews.Count();
+            NewScore = Math.Round((double)Reviews.Sum(p => p.Grade) / reviewQty, 1);
+            Review = Reviews.FirstOrDefault(); 
+            Review.Product.Score = NewScore;
             await _context.SaveChangesAsync();
 
             return RedirectToPage("Index");
