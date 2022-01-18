@@ -4,20 +4,23 @@
 @inject UserManager<IdentityUser> _userManager
 @inject ApplicationDbContext _context
 
-@*@{
+@{
     
-    //IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
+    var user = Context.User.Identity.Name;
     var Cart = await _context.Carts.Include(c => c.User)
-                                           .Where(c => c. ==)
+                                           .Where(c => c.User.Email == user)
                                            .FirstOrDefaultAsync();
                 
-    var CartItems = await _context.CartItems.Include(ci => ci.Product).Include(ci => ci.Cart).Where(ci => ci.CartID == Cart.ID).ToListAsync();
+    var CartItems = await _context.CartItems.Include(ci => ci.Product)
+                                            .Include(ci => ci.Cart)
+                                            .Where(ci => ci.CartID == Cart.ID)
+                                            .ToListAsync();
 
-    var TotalProductPrices = CartItems.Select(ci => ci.Quantity * ci.Product.Price).ToList();
+    var TotalOrderPrice = Math.Round(CartItems.Select(ci => ci.Quantity * ci.Product.Price).Sum(),2);
     var TotalProductQty = CartItems.Sum(ci => ci.Quantity);
   }
 
 
 <div style="display:inline">
-    <p>@TotalProductQty artiklar. Total kostnad: @TotalProductPrices</p>
-</div>*@
+    <p>@TotalProductQty artiklar. Total kostnad: @TotalOrderPrice</p>
+</div>
