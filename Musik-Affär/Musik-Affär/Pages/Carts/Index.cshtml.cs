@@ -79,11 +79,14 @@ namespace Musik_Affär.Pages.Carts
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
-            Cart = await _context.Carts.Include(c => c.User)
-                                       .Where(c => c.UserID == user.Id)
-                                       .FirstOrDefaultAsync();
+            //Cart = await _context.Carts.Include(c => c.User)
+            //                           .Where(c => c.UserID == user.Id)
+            //                           .FirstOrDefaultAsync();
 
-            CartItem = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.ProductID == id).FirstOrDefaultAsync();
+            CartItem = await _context.CartItems.Include(ci => ci.Product)
+                                               .Include(ci => ci.Cart)
+                                               .Where(ci => ci.ProductID == id && ci.Cart.UserID == user.Id)
+                                               .FirstOrDefaultAsync();
 
             CartItem.Quantity += 1;
             await _context.SaveChangesAsync();
@@ -94,11 +97,14 @@ namespace Musik_Affär.Pages.Carts
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
-            Cart = await _context.Carts.Include(c => c.User)
-                                       .Where(c => c.UserID == user.Id)
-                                       .FirstOrDefaultAsync();
+            //Cart = await _context.Carts.Include(c => c.User)
+            //                           .Where(c => c.UserID == user.Id)
+            //                           .FirstOrDefaultAsync();
 
-            CartItem = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.ProductID == id).FirstOrDefaultAsync();
+            CartItem = await _context.CartItems.Include(ci => ci.Product)
+                                               .Include(ci => ci.Cart)
+                                               .Where(ci => ci.ProductID == id && ci.Cart.UserID == user.Id)
+                                               .FirstOrDefaultAsync();
 
             CartItem.Quantity -= 1;
             await _context.SaveChangesAsync();
@@ -108,11 +114,14 @@ namespace Musik_Affär.Pages.Carts
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
-            Cart = await _context.Carts.Include(c => c.User)
-                                       .Where(c => c.UserID == user.Id)
-                                       .FirstOrDefaultAsync();
+            //Cart = await _context.Carts.Include(c => c.User)
+            //                           .Where(c => c.UserID == user.Id)
+            //                           .FirstOrDefaultAsync();
 
-            CartItem = await _context.CartItems.Include(ci => ci.Product).Where(ci => ci.ProductID == id).FirstOrDefaultAsync();
+            CartItem = await _context.CartItems.Include(ci => ci.Product)
+                                               .Include(ci => ci.Cart)
+                                               .Where(ci => ci.ProductID == id && ci.Cart.UserID == user.Id)
+                                               .FirstOrDefaultAsync();
 
             _context.CartItems.Remove(CartItem);
             await _context.SaveChangesAsync();
