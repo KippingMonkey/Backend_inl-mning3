@@ -37,7 +37,7 @@ namespace Musik_Affär.Pages.Products
 
             Product = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
 
-            SelectedBrand = Product.Brand;
+            SelectedBrand = Product.Category;
             SelectedColor = Product.Color;
             SelectedCategory = Product.Category;
 
@@ -63,12 +63,10 @@ namespace Musik_Affär.Pages.Products
             {
                 dbProduct.Name = Product.Name;
                 dbProduct.Price = Product.Price;
-                dbProduct.Brand = Product.Brand.GetType() != typeof(Product.Manufacturer) ? Product.Brand.ToString() : Enum.GetName(typeof(Product.Manufacturer), int.Parse(Product.Brand));
-                dbProduct.Brand = Product.Color.GetType() != typeof(Product.Style) ? Product.Color.ToString() : Enum.GetName(typeof(Product.Style), int.Parse(Product.Color));
-                dbProduct.Brand = Product.Brand.GetType() != typeof(Product.Type) ? Product.Category.ToString() : Enum.GetName(typeof(Product.Type), int.Parse(Product.Category));
+                dbProduct.Brand = Product.Category.GetType() == typeof(Product.Manufacturer) ? Product.Brand.ToString() : Enum.GetName(typeof(Product.Manufacturer), int.Parse(Product.Brand));
+                dbProduct.Color = Product.Color.GetType() == typeof(Product.Style) ? Product.Color.ToString() : Enum.GetName(typeof(Product.Style), int.Parse(Product.Color));
+                dbProduct.Category = Product.Category.GetType() == typeof(Product.Type) ? Product.Category.ToString() : Enum.GetName(typeof(Product.Type), int.Parse(Product.Category));
                 
-                //dbProduct.Category = Enum.GetName(typeof(Product.Type), int.Parse(Product.Category));
-                //dbProduct.Color = Enum.GetName(typeof(Product.Style), int.Parse(Product.Color));
 
 
                 await _context.SaveChangesAsync();

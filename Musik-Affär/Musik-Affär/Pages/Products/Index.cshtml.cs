@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -28,7 +28,6 @@ namespace Musik_Affär.Pages.Products
 
         public Review Review { get; set; }
         public Product Product { get; set; }
-        public double NewScore { get; set; }
 
         [FromQuery]
         public string SearchTerm { get; set; }
@@ -46,34 +45,33 @@ namespace Musik_Affär.Pages.Products
         private string[] sortColumns = { nameColumn, categoryColumn, colorColumn, priceColumn, brandColumn, scoreColumn };
         private string[] directions = { ascendingColumn, descendingColumn };
 
-        public bool LoggedIn { get; set; }
-
         [FromQuery]
         public string SortColumn { get; set; }
         [FromQuery]
         public string Direction { get; set; }
+        [FromQuery]
+        public string Brand { get; set; }
+        [FromQuery]
+        public string Category { get; set; }
+        [FromQuery]
+        public string Color { get; set; }
 
         public SelectList SortColumnList { get; set; }
         public SelectList DirectionList { get; set; }
 
+        public bool LoggedIn { get; set; }
+
         public async Task OnGetAsync()
         {
+            var query = _context.Products.Select(p => p).AsNoTracking();
+
+            if (Color != null) query = query.Where(q => q.Color == Enum.GetName(typeof(Product.Style), int.Parse(Color))).AsNoTracking();
+            if (Category != null) query = query.Where(q => q.Category == Enum.GetName(typeof(Product.Type), int.Parse(Category))).AsNoTracking();
+            if (Brand != null) query = query.Where(q => q.Brand == Enum.GetName(typeof(Product.Manufacturer), int.Parse(Brand))).AsNoTracking();
+            
+
             SortColumnList = new SelectList(sortColumns);
             DirectionList = new SelectList(directions);
-
-            var query = _context.Products.Select( p => p ).AsNoTracking();
-            int reviewQty = 0;
-
-            //foreach (var product in query)
-            //{
-            //    reviewQty = await _context.Reviews.Where(r => r.ProductID == product.ID).CountAsync();
-            //    NewScore = Math.Round((double)_context.Reviews.Where(r => r.ProductID == product.ID).Sum(p => p.Grade) / reviewQty, 1);
-            //    Product = await _context.Products.Where(p => p.ID == product.ID).FirstOrDefaultAsync();
-            //    product.Score = NewScore;
-            //    await _context.SaveChangesAsync();
-            //}
-
-            query = _context.Products.Select(p => p).AsNoTracking();
 
             if (SearchTerm != null)
             {
@@ -84,7 +82,7 @@ namespace Musik_Affär.Pages.Products
                     c.Brand.ToLower().Contains(SearchTerm.ToLower())
                 );
             }
-             
+
             if (SortColumn != null)
             {
                 if (SortColumn == nameColumn)
@@ -121,7 +119,7 @@ namespace Musik_Affär.Pages.Products
 
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
-            if(_context.Carts.Where(c => c.User == user).Any())
+            if (_context.Carts.Where(c => c.User == user).Any())
             {
                 var myCart = await _context.Carts.FirstAsync(p => p.UserID == user.Id);
                 var cartItems = await _context.CartItems.Where(ci => ci.CartID == myCart.ID).ToListAsync();
@@ -140,8 +138,6 @@ namespace Musik_Affär.Pages.Products
                     };
                     _context.CartItems.Add(newItem);
                 }
-                //var myItem = await _context.CartItem.Where(i => i.CartId == myCart.ID && i.ProductId == dbProduct.ID).SingleAsync();
-                //myItem.Qty++;
             }
             else
             {
@@ -163,7 +159,7 @@ namespace Musik_Affär.Pages.Products
             }
             await _context.SaveChangesAsync();
 
-            //await OnGetAsync();
+            await OnGetAsync();
             return RedirectToPage("Index");
         }
     }
