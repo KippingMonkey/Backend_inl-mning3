@@ -26,7 +26,6 @@ namespace Musik_Affär.Pages.Products
 
         public IList<Product> Products { get; set; }
 
-        public Review Review { get; set; }
         public Product Product { get; set; }
 
         [FromQuery]
