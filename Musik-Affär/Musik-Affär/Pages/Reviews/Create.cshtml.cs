@@ -31,12 +31,19 @@ namespace Musik_Affär.Pages.Reviews
 
         [BindProperty]
         public Review Review { get; set; }
+        public IList<Review> Reviews { get; set; }
 
-        
+        public bool AlreadyReviewed { get; set; } = false;
 
         public async Task<IActionResult> OnGet(int? id)
         {
-            Product =  await _context.Products.SingleAsync(m => m.ID == id);
+            Reviews = await _context.Reviews.Include(r => r.Product).ToListAsync();
+            Product = await _context.Products.SingleAsync(m => m.ID == id);
+
+            if (Reviews.Where(r => r.ProductID == Product.ID).Any())
+            {
+                AlreadyReviewed = true;
+            }
             return Page();
         }
 
@@ -68,16 +75,9 @@ namespace Musik_Affär.Pages.Reviews
             Review.Product = review.Product;
 
             Product.Reviews = new();
-            //Product.Reviews.Add(review);
-
-            //_context.Products.Attach(Product).Property(p => p.Score).IsModified = true;
+            
             _context.Reviews.Add(Review);
             await _context.SaveChangesAsync();
-
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
            
             return RedirectToPage("../Products/Index");
         }
