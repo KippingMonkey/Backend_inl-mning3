@@ -12,9 +12,9 @@ namespace Musik_Affär.Pages.Carts
 {
     public class CreateModel : PageModel
     {
-        private readonly Musik_Affär.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CreateModel(Musik_Affär.Data.ApplicationDbContext context)
+        public CreateModel(ApplicationDbContext context)
         {
             _context = context;
         }

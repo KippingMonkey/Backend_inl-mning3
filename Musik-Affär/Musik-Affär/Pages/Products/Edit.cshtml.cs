@@ -37,6 +37,7 @@ namespace Musik_Affär.Pages.Products
 
             Product = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
 
+            //Values for html to show the current values
             SelectedBrand = Product.Brand;
             SelectedColor = Product.Color;
             SelectedCategory = Product.Category;
@@ -66,7 +67,8 @@ namespace Musik_Affär.Pages.Products
                 dbProduct.Brand = int.TryParse(Product.Brand, out int a) ? Enum.GetName(typeof(Product.Manufacturer), int.Parse(Product.Brand)) : Product.Brand;
                 dbProduct.Color = int.TryParse(Product.Color, out int b) ? Enum.GetName(typeof(Product.Style), int.Parse(Product.Color)) : Product.Color;
                 dbProduct.Category = int.TryParse(Product.Category, out int c) ? Enum.GetName(typeof(Product.Type), int.Parse(Product.Category)) : Product.Category;
-
+                //Enums come in as strings, wordvalues when set by the "Selected"-variables and numbervalues when
+                //the user chooses a new value. The tenary check which one it is and selects action accordingly
 
 
                 await _context.SaveChangesAsync();

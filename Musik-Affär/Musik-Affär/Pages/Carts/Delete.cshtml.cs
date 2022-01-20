@@ -12,9 +12,9 @@ namespace Musik_Affär.Pages.Carts
 {
     public class DeleteModel : PageModel
     {
-        private readonly Musik_Affär.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DeleteModel(Musik_Affär.Data.ApplicationDbContext context)
+        public DeleteModel(ApplicationDbContext context)
         {
             _context = context;
         }

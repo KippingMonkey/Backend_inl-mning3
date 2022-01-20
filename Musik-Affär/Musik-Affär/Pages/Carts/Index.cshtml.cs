@@ -35,13 +35,11 @@ namespace Musik_Affär.Pages.Carts
         public CartItem CartItem{ get; set; }
         public bool hasCart { get; set; }
 
-        //public int ProductQty { get; set; } = 1;
         public int TotalProductQty { get; set; } = 5;
         public IList<decimal> TotalProductPrices { get; set; }
         public decimal TotalOrderPrice { get; set; } = 0;
 
-        //public List<Product> OrderedProducts { get; set; }
-
+        //from here to OnGet are the variables todo with search, filter and sort.
         [FromQuery]
         public string SearchTerm { get; set; }
 
@@ -72,13 +70,15 @@ namespace Musik_Affär.Pages.Carts
         public SelectList SortColumnList { get; set; }
         public SelectList DirectionList { get; set; }
 
-
         public async Task OnGetAsync()
         {
+            //gets current user
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
             
+            //checks if the current user has a cart.
             hasCart = _context.Carts.Include(c => c.User).Where(c => c.UserID == user.Id).Any();
 
+            //if the user does display all cartItems in their cart
             if (hasCart)
             {
                 Cart = await _context.Carts.Include(c => c.User)
@@ -91,7 +91,7 @@ namespace Musik_Affär.Pages.Carts
                 TotalProductQty = CartItems.Sum(ci => ci.Quantity);
                 TotalOrderPrice = TotalProductPrices.Sum();
             }
-            else
+            else //otherwise create a cart for them
             {
                 Cart newCart = new()
                 {
@@ -102,16 +102,19 @@ namespace Musik_Affär.Pages.Carts
                  await _context.SaveChangesAsync();
             }
 
+            //all query-related below is to do with search, filter and sort
             var query = CartItems;
 
+            //check if there are values in the selectlists
             if (Color != null) query = query.Where(q => q.Product.Color == Enum.GetName(typeof(Product.Style), int.Parse(Color))).ToList();
             if (Category != null) query = query.Where(q => q.Product.Category == Enum.GetName(typeof(Product.Type), int.Parse(Category))).ToList();
             if (Brand != null) query = query.Where(q => q.Product.Brand == Enum.GetName(typeof(Product.Manufacturer), int.Parse(Brand))).ToList();
 
-
+            //fill the selectlists for sorting with options
             SortColumnList = new SelectList(sortColumns);
             DirectionList = new SelectList(directions);
 
+            //searches for the entered searchterm in the input
             if (SearchTerm != null)
             {
                 query = query.Where(c =>
@@ -122,6 +125,7 @@ namespace Musik_Affär.Pages.Carts
                 ).ToList();
             }
 
+            //if the sorting selectlists have values, sort according to that value
             if (SortColumn != null)
             {
                 if (SortColumn == nameColumn)
@@ -151,13 +155,11 @@ namespace Musik_Affär.Pages.Carts
             }
             CartItems = query;
         }
+
+        //if the "+"-button is clicked add another of that product to the cart
         public async Task<IActionResult> OnPostPlus(int id)
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
-
-            //Cart = await _context.Carts.Include(c => c.User)
-            //                           .Where(c => c.UserID == user.Id)
-            //                           .FirstOrDefaultAsync();
 
             CartItem = await _context.CartItems.Include(ci => ci.Product)
                                                .Include(ci => ci.Cart)
@@ -169,30 +171,31 @@ namespace Musik_Affär.Pages.Carts
             return RedirectToPage("Index");
         }
 
+        //if the "-"-button is clicked subtract one 
         public async Task<IActionResult> OnPostMinus(int id)
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
-
-            //Cart = await _context.Carts.Include(c => c.User)
-            //                           .Where(c => c.UserID == user.Id)
-            //                           .FirstOrDefaultAsync();
 
             CartItem = await _context.CartItems.Include(ci => ci.Product)
                                                .Include(ci => ci.Cart)
                                                .Where(ci => ci.ProductID == id && ci.Cart.UserID == user.Id)
                                                .FirstOrDefaultAsync();
-
+            if (CartItem.Quantity == 1)
+            {
+                _context.CartItems.Remove(CartItem);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
             CartItem.Quantity -= 1;
             await _context.SaveChangesAsync();
+            }
+
             return RedirectToPage("Index");
         }
         public async Task<IActionResult> OnPostDelete(int id)
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
-
-            //Cart = await _context.Carts.Include(c => c.User)
-            //                           .Where(c => c.UserID == user.Id)
-            //                           .FirstOrDefaultAsync();
 
             CartItem = await _context.CartItems.Include(ci => ci.Product)
                                                .Include(ci => ci.Cart)
@@ -203,6 +206,5 @@ namespace Musik_Affär.Pages.Carts
             await _context.SaveChangesAsync();
             return RedirectToPage("Index");
         }
-
     }
 }

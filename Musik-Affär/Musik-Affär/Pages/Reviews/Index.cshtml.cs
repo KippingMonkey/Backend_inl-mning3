@@ -33,6 +33,7 @@ namespace Musik_Affär.Pages.Reviews
         public double NewScore { get;set; }
         public Product Product { get;set; }
 
+        //from here to OnGet are the variables todo with search, filter and sort.
         [FromQuery]
         public string SearchTerm { get; set; }
 
@@ -66,8 +67,10 @@ namespace Musik_Affär.Pages.Reviews
 
         public async Task OnGetAsync()
         {
+            //gets current user
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
+            //get the review that belong to the current user, include the products attached to the reviews
             Reviews = await _context.Reviews.Include(r => r.User)
                                             .Include(r => r.Product)
                                             .Where(r => r.User == user)
@@ -75,14 +78,16 @@ namespace Musik_Affär.Pages.Reviews
 
             var query = Reviews;
 
+            //filter on below values
             if (Color != null) query = query.Where(q => q.Product.Color == Enum.GetName(typeof(Product.Style), int.Parse(Color))).ToList();
             if (Category != null) query = query.Where(q => q.Product.Category == Enum.GetName(typeof(Product.Type), int.Parse(Category))).ToList();
             if (Brand != null) query = query.Where(q => q.Product.Brand == Enum.GetName(typeof(Product.Manufacturer), int.Parse(Brand))).ToList();
 
-
+            //fill the selectlists for sorting with options
             SortColumnList = new SelectList(sortColumns);
             DirectionList = new SelectList(directions);
 
+            //searches for the entered searchterm in the input
             if (SearchTerm != null)
             {
                 query = query.Where(c =>
@@ -93,6 +98,7 @@ namespace Musik_Affär.Pages.Reviews
                 ).ToList();
             }
 
+            //if the sorting selectlists have values, sort according to that value
             if (SortColumn != null)
             {
                 if (SortColumn == nameColumn)
@@ -123,13 +129,15 @@ namespace Musik_Affär.Pages.Reviews
             Reviews = query;
 
         }
-
+        
         public async Task<IActionResult> OnPostChange(int id, byte grade)
         {
+            //changes the grade for a product and saves to database
             Review = await _context.Reviews.Include(r => r.Product).Where(r => r.ID == id).FirstOrDefaultAsync();
             Review.Grade = grade;
             await _context.SaveChangesAsync();
 
+            //calculate and update the average grade after change and set it to the product.score
             Reviews = await _context.Reviews.Include( r => r.Product).Where(r => r.ProductID == Review.ProductID).ToListAsync();
             int reviewQty = Reviews.Count();
             NewScore = Math.Round((double)Reviews.Sum(p => p.Grade) / reviewQty, 1);
@@ -140,11 +148,13 @@ namespace Musik_Affär.Pages.Reviews
         }
         public async Task<IActionResult> OnPostDelete(int id)
         {
+            //delete the review from database
             Review = await _context.Reviews.Where(r => r.ID == id).FirstOrDefaultAsync();
 
             _context.Reviews.Remove(Review);
             await _context.SaveChangesAsync();
 
+            //calculate and update the average grade after delete and set it to the product.score
             Reviews = await _context.Reviews.Include(r => r.Product).Where(r => r.ProductID == Review.ProductID).ToListAsync();
             int reviewQty = Reviews.Count();
             NewScore = Math.Round((double)Reviews.Sum(p => p.Grade) / reviewQty, 1);

@@ -30,7 +30,7 @@ namespace Musik_Affär.Pages.Products
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync(Product product)
+        public async Task<IActionResult> OnPostAsync(Product product) //product with small p have the form-values
         {
             if (!ModelState.IsValid)
             {
@@ -39,7 +39,7 @@ namespace Musik_Affär.Pages.Products
             
             Product.Name = product.Name;
             Product.Category = Enum.GetName(typeof(Product.Type), int.Parse(product.Category));
-            //uses two parameters typeof(enum),numeric value of enum
+            //uses two parameters typeof(enum),numeric value of enum. Returns the enum value as a string
             Product.Color = Enum.GetName(typeof(Product.Style), int.Parse(product.Color));
             Product.Price = product.Price;
             Product.Brand = Enum.GetName(typeof(Product.Manufacturer), int.Parse(product.Brand));

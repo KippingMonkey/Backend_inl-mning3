@@ -38,8 +38,7 @@ namespace Musik_Affär.Models
             Klassisk,
             Baryton,
             Bas,
-            Elektrisk,
-            
+            Elektrisk
         }
 
         
@@ -73,7 +72,6 @@ namespace Musik_Affär.Models
         public string Brand { get; set; }
 
         public List<Order> Orders { get; set; }
-        //public List<Cart> Carts { get; set; }
         public List<Review> Reviews { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace Musik_Affär.Pages.Products
 
         public Product Product { get; set; }
 
+        //from here to OnGet are the variables todo with search, filter and sort.
         [FromQuery]
         public string SearchTerm { get; set; }
 
@@ -62,16 +63,19 @@ namespace Musik_Affär.Pages.Products
 
         public async Task OnGetAsync()
         {
+            //get all products
             var query = _context.Products.Select(p => p).AsNoTracking();
 
+            //filter on below values
             if (Color != null) query = query.Where(q => q.Color == Enum.GetName(typeof(Product.Style), int.Parse(Color))).AsNoTracking();
             if (Category != null) query = query.Where(q => q.Category == Enum.GetName(typeof(Product.Type), int.Parse(Category))).AsNoTracking();
             if (Brand != null) query = query.Where(q => q.Brand == Enum.GetName(typeof(Product.Manufacturer), int.Parse(Brand))).AsNoTracking();
-            
 
+            //fill the selectlists for sorting with options
             SortColumnList = new SelectList(sortColumns);
             DirectionList = new SelectList(directions);
 
+            //searches for the entered searchterm in the input
             if (SearchTerm != null)
             {
                 query = query.Where(c =>
@@ -82,6 +86,7 @@ namespace Musik_Affär.Pages.Products
                 );
             }
 
+            //if the sorting selectlists have values, sort according to that value
             if (SortColumn != null)
             {
                 if (SortColumn == nameColumn)
@@ -114,20 +119,25 @@ namespace Musik_Affär.Pages.Products
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
+            //find the desired product
             var dbProduct = await _context.Products.FirstAsync(p => p.ID == id);
 
+            //and the current user
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
 
+            //if the user has a cart already
             if (_context.Carts.Where(c => c.User == user).Any())
             {
+                //find the users cart and check if there is another of the same product in the cart
                 var myCart = await _context.Carts.FirstAsync(p => p.UserID == user.Id);
                 var cartItems = await _context.CartItems.Where(ci => ci.CartID == myCart.ID).ToListAsync();
+               //if there are, update that cartItems quantity by 1
                 if (cartItems.Where(ci => ci.ProductID == dbProduct.ID).Any())
                 {
                     var myCartItem = cartItems.Where(ci => ci.ProductID == dbProduct.ID).Single();
                     myCartItem.Quantity += 1;
                 }
-                else
+                else //if not, just add it to the cart
                 {
                     CartItem newItem = new()
                     {
@@ -138,7 +148,7 @@ namespace Musik_Affär.Pages.Products
                     _context.CartItems.Add(newItem);
                 }
             }
-            else
+            else //if the user do not have cart, create one and the add a new cartItem
             {
                 Cart newCart = new()
                 {
