@@ -7,7 +7,45 @@
 }
 
 <h1>Mina Recensioner</h1>
+<form method="get">
+    <table>
+        <tbody>
+            <tr>
+                <th><label for="SearchTerm">Sök</label></th>
+                <td><input type="search" name="SearchTerm" id="SearchTerm" value="@Model.SearchTerm" placeholder="Vad letar du efter?"></td>
+            </tr>
+            <tr>
+                <th><label for="SortColumn">Filtrera på:</label></th>
+                <td>
+                    <select asp-for="Brand" class="form-control" 
+                     asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
+                    <option value="">Märke</option></select>
 
+                     <select asp-for="Category"  
+                      asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
+                         <option value="">Kategori</option> </select>
+
+                    <select asp-for="Color" 
+                     asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
+                         <option value="">Färg</option> </select>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="SortColumn">Sortera efter:</label></th>
+                <td>
+                    <select asp-for="SortColumn" asp-items="Model.SortColumnList">
+                        <option value="">Välj Sortering</option>
+                    </select>
+                    <select asp-for="Direction" asp-items="Model.DirectionList">
+                         <option value="">Välj Ordning</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit" class="submit-btn">Sök</button>
+    <button type="reset">Nollställ sökning</button>
+</form>
 <table class="table" style="width:100%">
     <thead>
         <tr>
