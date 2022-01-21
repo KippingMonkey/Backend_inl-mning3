@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        <div>
-            <ul class="nav-links" style="display:inline">
+    <header class="header">
+        <nav>
+            <img src="~/media/logo.png" alt="Gitarr hjältarna" />
+            <ul class="nav-links">
                 <li>
                     <a class="nav-link" asp-area="" asp-page="/Index">Start</a>
                 </li>
@@ -18,7 +19,7 @@
                 </li>
                  @if (User.Identity.IsAuthenticated){
                     <li>
-                        <a asp-page="/Reviews/Index">Mina Recensioner</a>
+                        <a class="nav-link" asp-page="/Reviews/Index">Mina Recensioner</a>
                     </li>
                      <li>
                         <a class="nav-link" asp-page="/Carts/Index">Min Kundvagn</a>
@@ -27,19 +28,17 @@
                 }
                     <li><partial name="_LoginPartial" /></li>
             </ul>
-            
-        </div>
+        </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <main role="main">
         <div class="container">
-            &copy; 2021 - Musik_Affär
+             @RenderBody()
         </div>
+    </main>
+
+    <footer class="footer">
+        &copy; 2022 - Jonas &amp; Johan
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

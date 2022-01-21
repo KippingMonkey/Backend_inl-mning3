@@ -38,11 +38,11 @@ namespace Musik_Affär.Pages.Reviews
         public async Task<IActionResult> OnGet(int? id)
         {
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
-            Reviews = await _context.Reviews.Include(r => r.Product).Include(r => r.UserID).ToListAsync();
+            Reviews = await _context.Reviews.Include(r => r.Product).Include(r => r.User).ToListAsync();
             Product = await _context.Products.SingleAsync(m => m.ID == id);
 
             //check if this user has given this product a grade previously
-            if (Reviews.Where(r => r.ProductID == Product.ID && r.UserID == user.Id).Any())
+            if (Reviews.Where(r => r.ProductID == Product.ID && r.User == user).Any())
             {
                 AlreadyReviewed = true; //if they have, hide fields to make a new one
             }
