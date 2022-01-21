@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using Musik_Affär.Models;
 
 namespace Musik_Affär.Pages.Products
 {
+    [Authorize]//redirects to log in if a non-logged-in user trys to access the page
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using Musik_Affär.Models;
 
 namespace Musik_Affär.Pages.Reviews
 {
+    [Authorize]//redirects to log in if a non-logged-in user trys to access the page
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;

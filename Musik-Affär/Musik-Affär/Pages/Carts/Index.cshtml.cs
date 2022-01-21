@@ -13,6 +13,7 @@ using Musik_Affär.Models;
 
 namespace Musik_Affär.Pages.Carts
 {
+    [Authorize]//redirects to log in if a non-logged-in user trys to access the page
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -70,13 +71,22 @@ namespace Musik_Affär.Pages.Carts
         public SelectList SortColumnList { get; set; }
         public SelectList DirectionList { get; set; }
 
-        public async Task OnGetAsync()
+        [Authorize]
+        public async Task<IActionResult> OnGetAsync()
         {
             //gets current user
+            
             IdentityUser user = await _userManager.GetUserAsync(HttpContext.User);
             
+            if(user != null)
+            {
             //checks if the current user has a cart.
             hasCart = _context.Carts.Include(c => c.User).Where(c => c.UserID == user.Id).Any();
+            }
+            else
+            {
+                 return RedirectToPage("Identity/Account/Login");
+            }
 
             //if the user does display all cartItems in their cart
             if (hasCart)
@@ -154,6 +164,7 @@ namespace Musik_Affär.Pages.Carts
                 }
             }
             CartItems = query;
+            return Page();
         }
 
         //if the "+"-button is clicked add another of that product to the cart
