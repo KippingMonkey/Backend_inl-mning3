@@ -8,81 +8,79 @@
 }
 
 <h1>Produktlista</h1>
-<form method="get">
-    <table>
-        <tbody>
-            <tr>
-                <th><label for="SearchTerm">Sök</label></th>
-                <td><input type="search" name="SearchTerm" id="SearchTerm" value="@Model.SearchTerm" placeholder="Vad letar du efter?"></td>
-            </tr>
-            <tr>
-                <th><label for="SortColumn">Filtrera på:</label></th>
-                <td>
-                    <select asp-for="Brand" class="form-control" 
-                     asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
-                    <option value="">Märke</option></select>
+<div class="search-form">
+    <form method="get">
+        <input class="search" type="search" name="SearchTerm" id="SearchTerm" value="@Model.SearchTerm" placeholder="Vad letar du efter?">
+        <div class="filter">
+            <div>
+                <span>Filter:</span>
+                <select asp-for="Brand" class="form-control"
+                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
+                    <option value="">Märke</option>
+                </select>
+                <select asp-for="Category"
+                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
+                    <option value="">Kategori</option>
+                </select>
 
-                     <select asp-for="Category"  
-                      asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
-                         <option value="">Kategori</option> </select>
+                <select asp-for="Color"
+                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
+                    <option value="">Färg</option>
+                </select>
+            </div>
+            <div>
 
-                    <select asp-for="Color" 
-                     asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
-                         <option value="">Färg</option> </select>
-                </td>
-            </tr>
-            <tr>
-                <th><label for="SortColumn">Sortera efter:</label></th>
-                <td>
+                <span>Sortera:</span>
+                <div class="sort">
                     <select asp-for="SortColumn" asp-items="Model.SortColumnList">
-                        <option value="">Välj Sortering</option>
+                        <option value="">Sortera efter</option>
                     </select>
+                </div>
+                <div class="order">
                     <select asp-for="Direction" asp-items="Model.DirectionList">
-                         <option value="">Välj Ordning</option>
+                        <option value="">Ordning</option>
                     </select>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <button type="submit" class="submit-btn">Sök</button>
-    <button type="reset">Nollställ sökning</button>
-</form>
-<p>
-    <a asp-page="Create">Skapa Ny</a>
-</p>
-<table class="table" style="width:100%">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Products[0].Name)</th>
-            <th> @Html.DisplayNameFor(model => model.Products[0].Category)</th>
-            <th> @Html.DisplayNameFor(model => model.Products[0].Color)</th>
-            <th> @Html.DisplayNameFor(model => model.Products[0].Price)</th>
-            <th> @Html.DisplayNameFor(model => model.Products[0].Brand)</th>
-            <th> @Html.DisplayNameFor(model => model.Products[0].Score)</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Products) {
-        <tr>
-            <td> @Html.DisplayFor(modelItem => item.Name)</td>
-            <td> @Html.DisplayFor(modelItem => item.Category)</td>
-            <td> @Html.DisplayFor(modelItem => item.Color)</td>
-            <td> @Html.DisplayFor(modelItem => item.Price) SEK</td>
-            <td> @Html.DisplayFor(modelItem => item.Brand)</td>
-            <td> @Html.DisplayFor(modelItem => item.Score)</td>
-           @if (User.Identity.IsAuthenticated)
-           {
-            <td>
+                </div>
+            </div>
+        </div>
+        <div>
+
+        <button type="reset" class="btn">Nollställ sökning</button>
+        <button type="submit" class="btn">Sök</button>
+        </div>
+    </form>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a class="btn" asp-page="Create">Skapa Ny</a>
+    }
+</div>
+<div class="product-gallery">
+
+    @foreach (var item in Model.Products)
+    {
+        <div class="product">
+            <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+            <small>@Html.DisplayFor(modelItem => item.Brand)</small>
+            <small>@Html.DisplayFor(modelItem => item.Category) | @Html.DisplayFor(modelItem => item.Color)</small>
+            <p>Betyg: @Html.DisplayFor(modelItem => item.Score)</p>
+            <p>@Html.DisplayFor(modelItem => item.Price) SEK</p>
+            @if (User.Identity.IsAuthenticated)
+            {
                 <form method="post" style="display:inline" asp-route-id="@item.ID">
-                    <button type="submit" class="submit-btn">Köp</button>
+                    <button type="submit" class="buy-btn">Köp</button>
                 </form>
-                <a asp-page="./Edit" asp-route-id="@item.ID" class="crud-links">Ändra</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID"  class="crud-links">Detaljer</a> |
-                <a asp-page="../Reviews/Create" asp-route-id="@item.ID"  class="crud-links">Sätt Betyg</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID"  class="crud-links">Ta Bort</a>
-            </td>
-           }
-        </tr>
-}
-    </tbody>
-</table>
+                <div class="crud">
+                    <a asp-page="./Edit" asp-route-id="@item.ID" class="crud-links">Ändra</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID" class="crud-links">Detaljer</a> |
+                    <a asp-page="../Reviews/Create" asp-route-id="@item.ID" class="crud-links">Sätt Betyg</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID" class="crud-links">Ta Bort</a>
+                </div>
+            }
+            else
+            {
+                <p>Logga in för att köpa</p>
+            }
+        </div>
+    }
+
+</div>

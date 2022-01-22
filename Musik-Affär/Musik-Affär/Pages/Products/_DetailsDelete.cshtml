@@ -1,25 +1,7 @@
 ﻿@model Musik_Affär.Models.Product
 
-<table class="table" style="width:100%">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th>@Html.DisplayNameFor(model => model.Category)</th>
-            <th>@Html.DisplayNameFor(model => model.Color)</th>
-            <th>@Html.DisplayNameFor(model => model.Price)</th>
-            <th>@Html.DisplayNameFor(model => model.Brand)</th>
-            <th>@Html.DisplayNameFor(model => model.Score)</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>@Html.DisplayFor(model => model.Name)</td>
-            <td>@Html.DisplayFor(model => model.Category)</td>
-            <td>@Html.DisplayFor(model => model.Color)</td>
-            <td>@Html.DisplayFor(model => model.Price)</td>
-            <td>@Html.DisplayFor(model => model.Brand)</td>
-            <td>@Html.DisplayFor(model => model.Score)</td>
-        </tr>
-    </tbody>
-</table>
+<h3>@Html.DisplayFor(model => model.Name)</h3>
+<small>@Html.DisplayFor(model => model.Brand)</small>
+<small>@Html.DisplayFor(model => model.Category) | @Html.DisplayFor(model => model.Color)</small>
+<p>Betyg: @Html.DisplayFor(model => model.Score)</p>
+<p>@Html.DisplayFor(model => model.Price) SEK</p>

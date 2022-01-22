@@ -18,10 +18,13 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     margin: 0;
     padding: 0;
-    min-height: 100vh;
     background-color: var(--text-color);
     color: var(--primary-text);
     font-family: 'Roboto', sans-serif;
+}
+
+main {
+    min-height: calc(100vh - 160px);
 }
 
 a {
@@ -47,6 +50,8 @@ form button.btn {
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
+    max-height: 34px;
+    width: auto;
 }
 
 
@@ -56,7 +61,7 @@ select, input {
     border: 1px solid var(--dark-primary-color);
     box-shadow: none;
     /* Personalize */
-    min-height: 32px;
+    height: 34px;
     padding: 0 8px;
     color: var(--dark-primary-color);
     background-color: var(--text-color);
@@ -108,7 +113,6 @@ select, input {
 
 /* Footer */
 .footer {
-    position: absolute;
     bottom: 0;
     width: 100%;
     background-color: var(--dark-primary-color);
@@ -149,7 +153,7 @@ select, input {
         gap: 32px;
     }
 
-    .search-form .sort, .search-form .order {
+    .search-form .sort, .search-form .order, .filter div {
         display: inline-block;
     }
 
@@ -202,23 +206,59 @@ select, input {
         color: var(--secondary-text);
     }
 
-    .crud a {
-        color: var(--secondary-text);
-    }
-.crud a:hover {
-    color: var(--dark-primary-color);
-    text-decoration: underline;
+.crud a {
+    color: var(--secondary-text);
 }
 
-    .product .buy-btn {
-        margin-bottom: 16px;
-        background-color: var(--accent-color);
-        padding: 8px 24px;
-        color: var(--text-color);
-        text-transform: uppercase;
-        font-size: 16px;
-        cursor: pointer;
+    .crud a:hover {
+        color: var(--dark-primary-color);
+        text-decoration: underline;
     }
+
+.product .buy-btn {
+    border-radius: 5px;
+    margin-bottom: 16px;
+    background-color: var(--accent-color);
+    padding: 8px 24px;
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+@media (max-width: 1550px) {
+    .product-gallery {
+        grid-template-columns: repeat(3, minmax(330px, 1fr));
+    }
+
+    .btn {
+        margin: 8px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .product-gallery {
+        grid-template-columns: repeat(2, minmax(330px, 1fr));
+    }
+
+    .search-form, .search-form form {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .filter div {
+        margin: 8px;
+    }
+}
+
+@media (max-width: 736px) {
+    .product-gallery {
+        grid-template-columns: repeat(1, minmax(330px, 1fr));
+    }
+}
+
 
 /* Product Create & Edit*/
 .create-edit {
@@ -238,8 +278,12 @@ select, input {
 
     .create-edit input.btn {
         border: none;
-        font-size: 24px;
+        font-size: 16px;
     }
+
+/*.form-element select{
+    padding-top: 8px;
+}*/
 
 
 /* Product details & delete */
@@ -282,32 +326,33 @@ select, input {
 #account {
     width: 330px;
 }
-#account .form-group {
-    display: inline-block;
-}
 
-    #account .form-group:nth-of-type(-n+2) {
-        width: 330px;
-        display: grid;
-        align-items: center;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
+    #account .form-group {
+        display: inline-block;
     }
 
-#account .form-group:nth-last-of-type(1) {
-    display: block;
-}
+        #account .form-group:nth-of-type(-n+2) {
+            width: 330px;
+            display: grid;
+            align-items: center;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
 
-#account .checkbox input {
-    margin: 0;
-    padding: 0;
-    min-height: 16px;
-    min-width: 16px;
-}
+        #account .form-group:nth-last-of-type(1) {
+            display: block;
+        }
 
-#account .checkbox {
-    margin: 16px auto;
-}
+    #account .checkbox input {
+        margin: 0;
+        padding: 0;
+        min-height: 16px;
+        min-width: 16px;
+    }
+
+    #account .checkbox {
+        margin: 16px auto;
+    }
 
 /* Review Create*/
 
@@ -319,19 +364,19 @@ select, input {
     margin: 16px 0;
 }
 
-.two-column-grid .btn {
-    border: 0;
-    font-size: 16px;
-}
+    .two-column-grid .btn {
+        border: 0;
+        font-size: 16px;
+    }
 
-.two-column-grid a {
-    margin: 0;
-}
+    .two-column-grid a {
+        margin: 0;
+    }
 
-.two-column-grid a:hover {
-    text-decoration: underline;
-    color: var(--light-primary-color);
-}
+        .two-column-grid a:hover {
+            text-decoration: underline;
+            color: var(--light-primary-color);
+        }
 
 .review-buttons {
     margin-top: 16px;
@@ -355,6 +400,19 @@ select, input {
     font-weight: bold;
 }
 
+.cart-form form button {
+    cursor: pointer;
+    border: 1px solid var(--accent-color);
+    border-radius: 5px;
+    background-color: transparent;
+    color: var(--accent-color);
+}
+
+.cart-form a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
 /* Manage your account */
 .row .col-md-3 .nav {
     list-style-type: none;
@@ -362,9 +420,9 @@ select, input {
     padding: 0;
 }
 
-.row .col-md-3 .nav a{
-    color: var(--dark-primary-color);
-}
+    .row .col-md-3 .nav a {
+        color: var(--dark-primary-color);
+    }
 
     .row .col-md-3 .nav li {
         margin: 8px auto;
