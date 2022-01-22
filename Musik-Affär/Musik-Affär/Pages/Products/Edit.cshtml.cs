@@ -16,7 +16,6 @@ namespace Musik_Affär.Pages.Products
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-
         public EditModel(ApplicationDbContext context)
         {
             _context = context;

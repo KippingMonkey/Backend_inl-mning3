@@ -6,10 +6,25 @@
 }
 
 <h1>Produktnamn: @Model.Product.Name</h1>
-<hr />
-<partial name="_DetailsDelete" for="Product"/>
-<hr />
-<a asp-page="./Edit" asp-route-id="@Model.Product.ID">Ändra</a> |
-<a asp-page="./Index">Tillbaka till produkter</a> | 
-<a asp-page="../Carts/Index">Tillbaka till min kundkorg</a>
-        
+<div class="product">
+    @if (Model.Product.Category.ToString() == "Elektrisk")
+    {
+        <img class="detail-img" src="~/media/electric-guitar.png" />
+    }
+    else if (Model.Product.Category.ToString() == "Bas")
+    {
+        <img class="detail-img" src="~/media/bass-guitar.png" />
+    }
+    else
+    {
+        <img class="detail-img" src="~/media/acoustic-guitar.png" />
+    }
+    <partial name="_DetailsDelete" for="Product" />
+    <div class="crud">
+        <a asp-page="./Edit" asp-route-id="@Model.Product.ID">Ändra</a>
+    </div>
+</div>
+<div class="two-column-grid">
+    <a asp-page="./Index">Till produkter</a>
+    <a asp-page="../Carts/Index">Till kundkorg</a>
+</div>
