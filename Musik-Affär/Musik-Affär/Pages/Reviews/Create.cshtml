@@ -15,33 +15,31 @@ else
 {
     <h4>Välj ett betyg, 1-5 och klicka sedan på skapa</h4>
 }
-<div class="product">
-    <partial name="Products/_DetailsDelete" for="Product" />
-</div>
-<form method="post">
-    <div asp-validation-summary="ModelOnly" class="val-text"></div>
-    <input type="hidden" asp-for="Review.ProductID">
-    <input type="hidden" asp-for="Review.Product">
-    <input type="hidden" asp-for="Review.UserID">
+<hr />
+<partial name="Products/_DetailsDelete" for="Product" />
+<hr />
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="val-text"></div>
+        <input type="hidden" asp-for="Review.ProductID">
+        <input type="hidden" asp-for="Review.Product">
+        <input type="hidden" asp-for="Review.UserID">
     @if (!Model.AlreadyReviewed)
     {
-        <div class="form-element two-column-grid">
+        <div class="form-element">
             <label asp-for="Review.Grade" class="form-label"></label>
             <input asp-for="Review.Grade" class="form-control" type="number" max="5" min="1" />
             <span asp-validation-for="Review.Grade" class="val-text"></span>
         </div>
-
+        <div class="form-element">
+            <input type="submit" value="Skapa" class="submit-btn" />
+        </div>
     }
-    <div class="form-element two-column-grid">
-        <a asp-page="../Products/Index">Tillbaka till produkter</a>
-        @if (!Model.AlreadyReviewed)
-        {
-            <input type="submit" value="Skapa" class="btn" />
-        }
-    </div>
-</form>
+    </form>
 
 
+<div>
+    <a asp-page="../Products/Index">Tillbaka till produkter</a>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

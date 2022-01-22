@@ -66,11 +66,6 @@ namespace Musik_Affär.Pages.Products
             //get all products
             var query = _context.Products.Select(p => p).AsNoTracking();
 
-            if (!query.Any())
-            {
-                await MockData.Read(_context, _userManager);
-            }
-
             //filter on below values
             if (Color != null) query = query.Where(q => q.Color == Enum.GetName(typeof(Product.Style), int.Parse(Color))).AsNoTracking();
             if (Category != null) query = query.Where(q => q.Category == Enum.GetName(typeof(Product.Type), int.Parse(Category))).AsNoTracking();

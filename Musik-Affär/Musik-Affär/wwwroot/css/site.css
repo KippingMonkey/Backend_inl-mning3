@@ -18,14 +18,12 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     margin: 0;
     padding: 0;
+    min-height: 100vh;
     background-color: var(--text-color);
     color: var(--primary-text);
     font-family: 'Roboto', sans-serif;
 }
 
-main {
-    min-height: calc(100vh - 160px) ;
-}
 a {
     font-family: 'Roboto', sans-serif;
     margin: 0 8px;
@@ -49,8 +47,6 @@ form button.btn {
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
-    max-height: 34px;
-    width: auto;
 }
 
 
@@ -60,7 +56,7 @@ select, input {
     border: 1px solid var(--dark-primary-color);
     box-shadow: none;
     /* Personalize */
-    height: 34px;
+    min-height: 32px;
     padding: 0 8px;
     color: var(--dark-primary-color);
     background-color: var(--text-color);
@@ -112,6 +108,7 @@ select, input {
 
 /* Footer */
 .footer {
+    position: absolute;
     bottom: 0;
     width: 100%;
     background-color: var(--dark-primary-color);
@@ -152,7 +149,7 @@ select, input {
         gap: 32px;
     }
 
-    .search-form .sort, .search-form .order, .filter div {
+    .search-form .sort, .search-form .order {
         display: inline-block;
     }
 
@@ -214,7 +211,6 @@ select, input {
 }
 
     .product .buy-btn {
-        border-radius: 5px;
         margin-bottom: 16px;
         background-color: var(--accent-color);
         padding: 8px 24px;
@@ -223,38 +219,6 @@ select, input {
         font-size: 16px;
         cursor: pointer;
     }
-
-@media (max-width: 1550px) {
-    .product-gallery {
-        grid-template-columns: repeat(3, minmax(330px, 1fr));
-    }
-    .btn {
-        margin: 8px;
-    }
-}
-
-@media (max-width: 1100px) {
-    .product-gallery {
-        grid-template-columns: repeat(2, minmax(330px, 1fr));
-    }
-    .search-form, .search-form form {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    
-
-    .filter div{
-        margin: 8px;
-    }
-}
-
-@media (max-width: 736px) {
-    .product-gallery {
-        grid-template-columns: repeat(1, minmax(330px, 1fr));
-    }
-}
-
 
 /* Product Create & Edit*/
 .create-edit {
@@ -274,12 +238,8 @@ select, input {
 
     .create-edit input.btn {
         border: none;
-        font-size: 16px;
+        font-size: 24px;
     }
-
-/*.form-element select{
-    padding-top: 8px;
-}*/
 
 
 /* Product details & delete */
@@ -393,19 +353,6 @@ select, input {
 .cart-summery {
     margin-top: 32px;
     font-weight: bold;
-}
-
-.cart-form form button {
-    cursor: pointer;
-    border: 1px solid var(--accent-color);
-    border-radius: 5px;
-    background-color: transparent;
-    color: var(--accent-color);
-}
-
-.cart-form a:hover {
-    color: var(--accent-color);
-    text-decoration: underline;
 }
 
 /* Manage your account */

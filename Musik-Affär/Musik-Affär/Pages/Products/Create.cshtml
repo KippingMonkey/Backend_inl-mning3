@@ -7,8 +7,7 @@
 
 <h1>Skapa ny produkt</h1>
 
-<div class="create-edit">
-
+<hr />
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="val-text"></div>
         <div class="form-element">
@@ -18,18 +17,16 @@
         </div>
         <div class="form-element">
             <label asp-for="@Model.Product.Category" class="form-label"></label>
-            <select asp-for="@Model.Product.Category" class="form-control"
-                    asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
-                <option value="">Välj Kategori</option>
-            </select>
+            <select asp-for="@Model.Product.Category" class="form-control" 
+            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
+            <option value="">Välj Kategori</option></select>
             <span asp-validation-for="@Model.Product.Category" class="val-text"></span>
         </div>
         <div class="form-element">
             <label asp-for="@Model.Product.Color" class="form-label"></label>
             <select asp-for="@Model.Product.Color" class="form-control"
-                    asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
-                <option value="">Välj Färg</option>
-            </select>
+            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
+            <option value="">Välj Färg</option></select>
             <span asp-validation-for="@Model.Product.Color" class="val-text"></span>
         </div>
         <div class="form-element">
@@ -40,18 +37,16 @@
         <div class="form-element">
             <label asp-for="@Model.Product.Brand" class="form-label"></label>
             <select asp-for="@Model.Product.Brand" class="form-control"
-                    asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
-                <option value="">Välj Tillverkare</option>>
-            </select>
+            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
+            <option value="">Välj Tillverkare</option>></select>
             <span asp-validation-for="@Model.Product.Brand" class="val-text"></span>
         </div>
-        <div class="form-element two-column-grid">
-            <a asp-page="Index">Tillbaka till produkter</a>
-            <input class="btn val-text" type="submit" value="Skapa"/>
+        <div class="form-element">
+            <input type="submit" value="Skapa" class="val-text" />
         </div>
     </form>
-
-
+<div>
+    <a asp-page="Index">Tillbaka till produkter</a>
 </div>
 
 @section Scripts {

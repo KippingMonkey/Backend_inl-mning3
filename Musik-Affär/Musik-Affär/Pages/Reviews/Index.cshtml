@@ -7,65 +7,73 @@
 }
 
 <h1>Mina Recensioner</h1>
-<div class="search-form">
-    <form method="get">
-        <input class="search" type="search" name="SearchTerm" id="SearchTerm" value="@Model.SearchTerm" placeholder="Vad letar du efter?">
-        <div class="filter">
-            <div>
-                <span>Filter:</span>
-                <select asp-for="Brand" class="form-control"
-                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
-                    <option value="">Märke</option>
-                </select>
-                <select asp-for="Category"
-                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
-                    <option value="">Kategori</option>
-                </select>
+<form method="get">
+    <table>
+        <tbody>
+            <tr>
+                <th><label for="SearchTerm">Sök</label></th>
+                <td><input type="search" name="SearchTerm" id="SearchTerm" value="@Model.SearchTerm" placeholder="Vad letar du efter?"></td>
+            </tr>
+            <tr>
+                <th><label for="SortColumn">Filtrera på:</label></th>
+                <td>
+                    <select asp-for="Brand" class="form-control" 
+                     asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
+                    <option value="">Märke</option></select>
 
-                <select asp-for="Color"
-                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
-                    <option value="">Färg</option>
-                </select>
-            </div>
-            <div>
+                     <select asp-for="Category"  
+                      asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
+                         <option value="">Kategori</option> </select>
 
-                <span>Sortera:</span>
-                <div class="sort">
+                    <select asp-for="Color" 
+                     asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
+                         <option value="">Färg</option> </select>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="SortColumn">Sortera efter:</label></th>
+                <td>
                     <select asp-for="SortColumn" asp-items="Model.SortColumnList">
-                        <option value="">Sortera efter</option>
+                        <option value="">Välj Sortering</option>
                     </select>
-                </div>
-                <div class="order">
                     <select asp-for="Direction" asp-items="Model.DirectionList">
-                        <option value="">Ordning</option>
+                         <option value="">Välj Ordning</option>
                     </select>
-                </div>
-            </div>
-        </div>
-        <div>
-
-            <button type="reset" class="btn">Nollställ sökning</button>
-            <button type="submit" class="btn">Sök</button>
-        </div>
-    </form>
-</div>
-    <div class="product-gallery">
-        @foreach (var item in Model.Reviews)
-        {
-            <div class="product">
-                <h3>@Html.DisplayFor(modelItem => item.Product.Name)</h3>
-                <small>@Html.DisplayFor(modelItem => item.Product.Brand)</small>
-                <small>@Html.DisplayFor(modelItem => item.Product.Category) | @Html.DisplayFor(modelItem => item.Product.Color)</small>
-                <p>@Html.DisplayFor(modelItem => item.Product.Price) SEK</p>
-                <form class="review-post" method="post">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit" class="submit-btn">Sök</button>
+    <button type="reset">Nollställ sökning</button>
+</form>
+<table class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Reviews[0].Product.Name)</th>
+            <th> @Html.DisplayNameFor(model => model.Reviews[0].Product.Category)</th>
+            <th> @Html.DisplayNameFor(model => model.Reviews[0].Product.Color)</th>
+            <th> @Html.DisplayNameFor(model => model.Reviews[0].Product.Brand)</th>
+            <th>Mitt betyg</th>
+            <th>Ändra betyg</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Reviews) {
+        <tr>
+            <td> @Html.DisplayFor(modelItem => item.Product.Name)</td>
+            <td> @Html.DisplayFor(modelItem => item.Product.Category)</td>
+            <td> @Html.DisplayFor(modelItem => item.Product.Color)</td>
+            <td> @Html.DisplayFor(modelItem => item.Product.Brand)</td>
+            <td> @Html.DisplayFor(modelItem => item.Grade)</td>
+            <td>
+                <form method="post">
                     <div asp-validation-summary="ModelOnly" class="val-text"></div>
-                    <input asp-for="@Model.Grade" class="form-control" type="number" max="5" min="1" value="@item.Grade" />
-                    <div class="review-buttons">
-                        <button class="review-button" asp-page-handler="Change" asp-route-id="@item.ID" type="submit">✅</button>
-                        <button class="review-button" asp-page-handler="Delete" asp-route-id="@item.ID" type="submit">🗑️</button>
-                    </div>
+                    <input asp-for="@Model.Grade" class="form-control" type="number" max="5" min="1" value="@item.Grade"/>
+                    <button asp-page-handler="Change" asp-route-id="@item.ID" type="submit">✅</button>
+                    <button asp-page-handler="Delete" asp-route-id="@item.ID" type="submit">🗑️</button>
                 </form>
-            </div>
-        }
-
-    </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

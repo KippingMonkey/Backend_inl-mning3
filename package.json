@@ -1,3 +1,5 @@
 {
-  "dependencies": {}
+  "dependencies": {
+    "globalize": "^1.7.0"
+  }
 }

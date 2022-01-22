@@ -20,4 +20,7 @@
     var TotalProductQty = CartItems.Sum(ci => ci.Quantity);
   }
 
-<span>@TotalProductQty</span>
+
+<div style="display:inline">
+    <p>@TotalProductQty artiklar. Total kostnad: @TotalOrderPrice</p>
+</div>

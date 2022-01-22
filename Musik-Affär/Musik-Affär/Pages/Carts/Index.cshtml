@@ -7,50 +7,48 @@
 
 <h1>Min Kundkorg</h1>
 <h2>@Model.User.Identity.Name</h2>
-<div class="search-form">
-    <form method="get">
-        <input class="search" type="search" name="SearchTerm" id="SearchTerm" value="@Model.SearchTerm" placeholder="Vad letar du efter?">
-        <div class="filter">
-            <div>
-                <span>Filter:</span>
-                <select asp-for="Brand" class="form-control"
-                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
-                    <option value="">Märke</option>
-                </select>
-                <select asp-for="Category"
-                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
-                    <option value="">Kategori</option>
-                </select>
+<form method="get">
+    <table>
+        <tbody>
+            <tr>
+                <th><label for="SearchTerm">Sök</label></th>
+                <td><input type="search" name="SearchTerm" id="SearchTerm" value="@Model.SearchTerm" placeholder="Vad letar du efter?"></td>
+            </tr>
+            <tr>
+                <th><label for="SortColumn">Filtrera på:</label></th>
+                <td>
+                    <select asp-for="Brand" class="form-control" 
+                     asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
+                    <option value="">Märke</option></select>
 
-                <select asp-for="Color"
-                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
-                    <option value="">Färg</option>
-                </select>
-            </div>
-            <div>
+                     <select asp-for="Category"  
+                      asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
+                         <option value="">Kategori</option> </select>
 
-                <span>Sortera:</span>
-                <div class="sort">
+                    <select asp-for="Color" 
+                     asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
+                         <option value="">Färg</option> </select>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="SortColumn">Sortera efter:</label></th>
+                <td>
                     <select asp-for="SortColumn" asp-items="Model.SortColumnList">
-                        <option value="">Sortera efter</option>
+                        <option value="">Välj Sortering</option>
                     </select>
-                </div>
-                <div class="order">
                     <select asp-for="Direction" asp-items="Model.DirectionList">
-                        <option value="">Ordning</option>
+                         <option value="">Välj Ordning</option>
                     </select>
-                </div>
-            </div>
-        </div>
-        <div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit" class="submit-btn">Sök</button>
+    <button asp-page-handler="Reset" type="reset">Nollställ sökning</button>
+</form>
 
-            <button type="reset" class="btn">Nollställ sökning</button>
-            <button type="submit" class="btn">Sök</button>
-        </div>
-    </form>
-</div>
 <table class="table" style="width:100%">
-    <thead class="tablehead">
+    <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Product.Name)</th>
             <th>@Html.DisplayNameFor(model => model.Product.Category)</th>
@@ -72,7 +70,7 @@
             <td> @Html.DisplayFor(model => model.CartItems[i].Product.Price ) SEK</td>
             <td> @Html.DisplayFor(model => model.CartItems[i].Quantity )</td>
             <td> @Html.DisplayFor(model => model.TotalProductPrices[i])</td>
-            <td class="cart-form">
+            <td>
                 <form asp-page-handler="Plus" asp-page="Index" method="post" style="display:inline"  asp-route-id="@Model.CartItems[i].ProductID">
                     <button type="submit">+</button>
                 </form>
@@ -88,15 +86,15 @@
 }       <tr></tr>
         @if (Model.CartItems.Count() != 0)
         {
-       <tr class="cart-summery">
-           <td></td>
-           <td></td>
-           <td></td>
-           <td></td>
-           <td>Totalt: </td>
-           <td>@Html.DisplayFor(model => model.TotalProductQty) produkter</td>
-           <td> @Html.DisplayFor(model => model.TotalOrderPrice) SEK</td>
-       </tr>
+            <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Totalt: </td>
+            <td>@Html.DisplayFor(model => model.TotalProductQty) produkter</td>
+            <td> @Html.DisplayFor(model => model.TotalOrderPrice) SEK</td>
+        </tr>
         }
     </tbody>
 </table>

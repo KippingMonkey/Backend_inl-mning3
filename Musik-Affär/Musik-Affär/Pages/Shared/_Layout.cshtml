@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,7 +22,8 @@
                         <a class="nav-link" asp-page="/Reviews/Index">Mina Recensioner</a>
                     </li>
                      <li>
-                        <a class="nav-link" asp-page="/Carts/Index">Min Kundvagn(<partial name="_itemsInCart" /> )</a>
+                        <a class="nav-link" asp-page="/Carts/Index">Min Kundvagn</a>
+                        <partial name="_itemsInCart"/>
                     </li>
                 }
                     <li><partial name="_LoginPartial" /></li>
@@ -32,9 +32,8 @@
     </header>
 
     <main role="main">
-        @System.Globalization.CultureInfo.CurrentUICulture
         <div class="container">
-            @RenderBody()
+             @RenderBody()
         </div>
     </main>
 

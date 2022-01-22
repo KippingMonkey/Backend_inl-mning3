@@ -8,11 +8,11 @@
 <h1>Produktnamn: @Model.Product.Name</h1>
 
 <h3>Är du säker på att du vill ta bort den här produkten?</h3>
-<div class="product">
-    <partial name="_DetailsDelete" for="Product" />
-</div>
-<form class="return-buttons" method="post">
-    <a class="btn" asp-page="./Index">Tillbaka till produkter</a>
-    <input type="hidden" asp-for="Product.ID" />
-    <input class="delete-btn" type="submit" value="Ta bort" class="submit-btn" />
-</form>
+<hr />
+<partial name="_DetailsDelete" for="Product"/>
+<hr />
+ <form method="post">
+        <input type="hidden" asp-for="Product.ID" />
+        <input type="submit" value="Ta bort" class="submit-btn" /> |
+        <a asp-page="./Index">Tillbaka till produkter</a>
+    </form>
