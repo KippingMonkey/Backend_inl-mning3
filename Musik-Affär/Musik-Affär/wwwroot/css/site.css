@@ -69,11 +69,18 @@ select, input {
     border-radius: 5px;
     cursor: pointer;
 }
+
+.form-group .checkbox input{
+    height: 16px;
+    width: 16px;
+}
 /* Layout Navigation */
 /* Header */
 .header {
     background-color: var(--primary-color);
     color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
 }
 
     .header img {
@@ -109,7 +116,7 @@ select, input {
         text-decoration: underline;
     }
 
-
+/* Hamburger menu */
 
 /* Footer */
 .footer {
@@ -164,8 +171,12 @@ select, input {
         border: 1px solid var(--dark-primary-color);
     }
 
+    .search-form .btn {
+        margin: 0;
+    }
 
     .search-form button {
+        margin: 0;
         border: none;
         background-color: var(--dark-primary-color);
         color: var(--text-color);
@@ -179,8 +190,9 @@ select, input {
 
 .product-gallery {
     display: grid;
-    grid-template-columns: repeat(4, minmax(330px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
     grid-auto-columns: auto;
+    justify-items: center;
     gap: 16px;
 }
 
@@ -227,20 +239,12 @@ select, input {
 }
 
 @media (max-width: 1550px) {
-    .product-gallery {
-        grid-template-columns: repeat(3, minmax(330px, 1fr));
-    }
-
     .btn {
         margin: 8px;
     }
 }
 
 @media (max-width: 1100px) {
-    .product-gallery {
-        grid-template-columns: repeat(2, minmax(330px, 1fr));
-    }
-
     .search-form, .search-form form {
         flex-direction: column;
         align-items: center;
@@ -248,15 +252,17 @@ select, input {
     }
 
 
-    .filter div {
-        margin: 8px;
+    .filter {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 1fr);
+        gap: 8px;
     }
 }
 
 @media (max-width: 736px) {
-    .product-gallery {
+/*    .product-gallery {
         grid-template-columns: repeat(1, minmax(330px, 1fr));
-    }
+    }*/
 }
 
 
@@ -434,4 +440,36 @@ select, input {
     align-items: center;
     grid-template-columns: 1fr 1fr;
     margin: 16px 0;
+}
+
+@media (max-width: 768px) {
+    .header img {
+        display: none;
+    }
+
+    .header {
+        justify-content: center;
+    }
+
+    .nav-links {
+        flex-direction: column;
+    }
+}
+
+.welcome-page img {
+    width: 500px;
+    height: auto;
+}
+
+.search-form form {
+    margin-bottom: 8px;
+}
+
+    .cart-detail {
+        display: none;
+    }
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+    }
 }

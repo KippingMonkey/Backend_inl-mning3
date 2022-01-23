@@ -152,16 +152,24 @@ namespace Musik_Affär.Pages.Reviews
         {
             //delete the review from database
             Review = await _context.Reviews.Where(r => r.ID == id).FirstOrDefaultAsync();
+            Product product = await _context.Products.Where(p => p.ID == Review.ProductID).FirstOrDefaultAsync();
 
             _context.Reviews.Remove(Review);
             await _context.SaveChangesAsync();
 
             //calculate and update the average grade after delete and set it to the product.score
             Reviews = await _context.Reviews.Include(r => r.Product).Where(r => r.ProductID == Review.ProductID).ToListAsync();
-            int reviewQty = Reviews.Count();
-            NewScore = Math.Round((double)Reviews.Sum(p => p.Grade) / reviewQty, 1);
-            Review = Reviews.FirstOrDefault(); 
-            Review.Product.Score = NewScore;
+            if (Reviews.Any())
+            {
+                int reviewQty = Reviews.Count();
+                NewScore = Math.Round((double)Reviews.Sum(p => p.Grade) / reviewQty, 1);
+                Review = Reviews.FirstOrDefault();
+                Review.Product.Score = NewScore;
+            }
+            else
+            {
+                product.Score = 0;
+            }
             await _context.SaveChangesAsync();
 
             return RedirectToPage("Index");

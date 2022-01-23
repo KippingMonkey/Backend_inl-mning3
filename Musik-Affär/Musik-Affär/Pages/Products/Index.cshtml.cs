@@ -63,6 +63,7 @@ namespace Musik_Affär.Pages.Products
 
         public async Task OnGetAsync()
         {
+
             //get all products
             var query = _context.Products.Select(p => p).AsNoTracking();
 

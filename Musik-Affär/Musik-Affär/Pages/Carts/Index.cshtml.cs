@@ -85,7 +85,7 @@ namespace Musik_Affär.Pages.Carts
             }
             else
             {
-                 return RedirectToPage("Identity/Account/Login");
+                 return Redirect("~/");
             }
 
             //if the user does display all cartItems in their cart

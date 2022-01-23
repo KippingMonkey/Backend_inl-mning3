@@ -4,99 +4,106 @@
 @{
     ViewData["Title"] = "Index";
 }
+@if (User.Identity.IsAuthenticated)
+{
+    <h1>Min Kundkorg</h1>
+    <h2>@Model.User.Identity.Name</h2>
+    <div class="search-form">
+        <form method="get">
+            <input class="search" type="search" name="SearchTerm" id="SearchTerm" value="@Model.SearchTerm" placeholder="Vad letar du efter?">
+            <div class="filter">
+                <div>
+                    <span>Filter:</span>
+                    <select asp-for="Brand" class="form-control"
+                            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
+                        <option value="">Märke</option>
+                    </select>
+                    <select asp-for="Category"
+                            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
+                        <option value="">Kategori</option>
+                    </select>
 
-<h1>Min Kundkorg</h1>
-<h2>@Model.User.Identity.Name</h2>
-<div class="search-form">
-    <form method="get">
-        <input class="search" type="search" name="SearchTerm" id="SearchTerm" value="@Model.SearchTerm" placeholder="Vad letar du efter?">
-        <div class="filter">
-            <div>
-                <span>Filter:</span>
-                <select asp-for="Brand" class="form-control"
-                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Manufacturer>()">
-                    <option value="">Märke</option>
-                </select>
-                <select asp-for="Category"
-                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Type>()">
-                    <option value="">Kategori</option>
-                </select>
-
-                <select asp-for="Color"
-                        asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
-                    <option value="">Färg</option>
-                </select>
-            </div>
-            <div>
-
-                <span>Sortera:</span>
-                <div class="sort">
-                    <select asp-for="SortColumn" asp-items="Model.SortColumnList">
-                        <option value="">Sortera efter</option>
+                    <select asp-for="Color"
+                            asp-items="Html.GetEnumSelectList<Musik_Affär.Models.Product.Style>()">
+                        <option value="">Färg</option>
                     </select>
                 </div>
-                <div class="order">
-                    <select asp-for="Direction" asp-items="Model.DirectionList">
-                        <option value="">Ordning</option>
-                    </select>
+                <div>
+
+                    <span>Sortera:</span>
+                    <div class="sort">
+                        <select asp-for="SortColumn" asp-items="Model.SortColumnList">
+                            <option value="">Sortera efter</option>
+                        </select>
+                    </div>
+                    <div class="order">
+                        <select asp-for="Direction" asp-items="Model.DirectionList">
+                            <option value="">Ordning</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div>
-
-            <button type="reset" class="btn">Nollställ sökning</button>
-            <button type="submit" class="btn">Sök</button>
-        </div>
-    </form>
-</div>
-<table class="table" style="width:100%">
-    <thead class="tablehead">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Product.Name)</th>
-            <th>@Html.DisplayNameFor(model => model.Product.Category)</th>
-            <th>@Html.DisplayNameFor(model => model.Product.Color)</th>
-            <th>@Html.DisplayNameFor(model => model.Product.Brand)</th>
-            <th>@Html.DisplayNameFor(model => model.Product.Price)</th>
-            <th>Antal</th>
-            <th>Totalt</th>
-            <th>Ändra</th>
-        </tr>
-    </thead>
-       <tbody>
-@for(int i = 0; i < Model.CartItems.Count(); i++) {
-        <tr>
-            <td> @Html.DisplayFor(model => model.CartItems[i].Product.Name )</td>
-            <td> @Html.DisplayFor(model => model.CartItems[i].Product.Category )</td>
-            <td> @Html.DisplayFor(model => model.CartItems[i].Product.Color )</td>
-            <td> @Html.DisplayFor(model => model.CartItems[i].Product.Brand )</td>
-            <td> @Html.DisplayFor(model => model.CartItems[i].Product.Price ) SEK</td>
-            <td> @Html.DisplayFor(model => model.CartItems[i].Quantity )</td>
-            <td> @Html.DisplayFor(model => model.TotalProductPrices[i])</td>
-            <td class="cart-form">
-                <form asp-page-handler="Plus" asp-page="Index" method="post" style="display:inline"  asp-route-id="@Model.CartItems[i].ProductID">
-                    <button type="submit">+</button>
-                </form>
-                  <form asp-page-handler="Minus" asp-page="Index" method="post" style="display:inline" asp-route-id="@Model.CartItems[i].ProductID">
-                    <button type="submit">-</button>
-                </form>
-                 <form asp-page-handler="Delete" asp-page="Index" method="post" style="display:inline" asp-route-id="@Model.CartItems[i].ProductID">
-                    <button type="submit">Ta bort</button>
-                </form>
-                <a asp-page="./Details" asp-route-id="@Model.CartItems[i].ProductID"  class="crud-links">Detaljer</a>
-            </td>
-        </tr>
-}       <tr></tr>
-        @if (Model.CartItems.Count() != 0)
-        {
-       <tr class="cart-summery">
-           <td></td>
-           <td></td>
-           <td></td>
-           <td></td>
-           <td>Totalt: </td>
-           <td>@Html.DisplayFor(model => model.TotalProductQty) produkter</td>
-           <td> @Html.DisplayFor(model => model.TotalOrderPrice) SEK</td>
-       </tr>
-        }
-    </tbody>
-</table>
+            <div>
+                <button type="submit" class="btn">Sök</button>
+            </div>
+        </form>
+    </div>
+    <table class="table" style="width:100%">
+        <thead class="tablehead">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Product.Name)</th>
+                <th class="cart-detail">@Html.DisplayNameFor(model => model.Product.Category)</th>
+                <th class="cart-detail">@Html.DisplayNameFor(model => model.Product.Color)</th>
+                <th>@Html.DisplayNameFor(model => model.Product.Brand)</th>
+                <th>@Html.DisplayNameFor(model => model.Product.Price)</th>
+                <th>Antal</th>
+                <th>Totalt</th>
+                <th>Ändra</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.CartItems.Count(); i++)
+            {
+                <tr>
+                    <td> @Html.DisplayFor(model => model.CartItems[i].Product.Name)</td>
+                    <td class="cart-detail"> @Html.DisplayFor(model => model.CartItems[i].Product.Category)</td>
+                    <td class="cart-detail"> @Html.DisplayFor(model => model.CartItems[i].Product.Color)</td>
+                    <td> @Html.DisplayFor(model => model.CartItems[i].Product.Brand)</td>
+                    <td> @Html.DisplayFor(model => model.CartItems[i].Product.Price) SEK</td>
+                    <td> @Html.DisplayFor(model => model.CartItems[i].Quantity)</td>
+                    <td> @Html.DisplayFor(model => model.TotalProductPrices[i])</td>
+                    <td class="cart-form">
+                        <form asp-page-handler="Plus" asp-page="Index" method="post" style="display:inline" asp-route-id="@Model.CartItems[i].ProductID">
+                            <button type="submit">+</button>
+                        </form>
+                        <form asp-page-handler="Minus" asp-page="Index" method="post" style="display:inline" asp-route-id="@Model.CartItems[i].ProductID">
+                            <button type="submit">-</button>
+                        </form>
+                        <form asp-page-handler="Delete" asp-page="Index" method="post" style="display:inline" asp-route-id="@Model.CartItems[i].ProductID">
+                            <button type="submit">Ta bort</button>
+                        </form>
+                        <a asp-page="./Details" asp-route-id="@Model.CartItems[i].ProductID" class="crud-links">Detaljer</a>
+                    </td>
+                </tr>
+            }
+            <tr></tr>
+            @if (Model.CartItems.Count() != 0)
+            {
+                <tr class="cart-summery">
+                    <td></td>
+                    <td class="cart-detail"></td>
+                    <td class="cart-detail"></td>
+                    <td></td>
+                    <td>Totalt: </td>
+                    <td>@Html.DisplayFor(model => model.TotalProductQty) produkter</td>
+                    <td> @Html.DisplayFor(model => model.TotalOrderPrice) SEK</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>Ingen varukorg!</h2>
+    <p>Vänligen logga in för att se eller skapa din kundvagn.</p>
+}

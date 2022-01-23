@@ -1,0 +1,28 @@
+﻿@page "{id:int}"
+@model Musik_Affär.Pages.Carts.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Produktnamn: @Model.Product.Name</h1>
+<div class="product">
+    @if (Model.Product.Category.ToString() == "Elektrisk")
+    {
+        <img class="detail-img" src="~/media/electric-guitar.png" />
+    }
+    else if (Model.Product.Category.ToString() == "Bas")
+    {
+        <img class="detail-img" src="~/media/bass-guitar.png" />
+    }
+    else
+    {
+        <img class="detail-img" src="~/media/acoustic-guitar.png" />
+    }
+    <partial name="./Products/_DetailsDelete" for="Product" />
+
+</div>
+<div class="two-column-grid">
+    <a asp-page="./Index">Till produkter</a>
+    <a asp-page="../Carts/Index">Till kundkorg</a>
+</div>

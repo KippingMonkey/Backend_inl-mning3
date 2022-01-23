@@ -9,30 +9,30 @@
 </head>
 <body>
     <header class="header">
-        <nav>
             <img src="~/media/logo.png" alt="Gitarr hjältarna" />
-            <ul class="nav-links">
-                <li>
-                    <a class="nav-link" asp-area="" asp-page="/Index">Start</a>
-                </li>
-                <li>
-                    <a class="nav-link" asp-page="/Products/Index">Produkter</a>
-                </li>
-                 @if (User.Identity.IsAuthenticated){
+            <nav>
+                <ul class="nav-links">
                     <li>
-                        <a class="nav-link" asp-page="/Reviews/Index">Mina Recensioner</a>
+                        <a class="nav-link" asp-area="" asp-page="/Index">Start</a>
                     </li>
-                     <li>
-                        <a class="nav-link" asp-page="/Carts/Index">Min Kundvagn(<partial name="_itemsInCart" /> )</a>
+                    <li>
+                        <a class="nav-link" asp-page="/Products/Index">Produkter</a>
                     </li>
-                }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <a class="nav-link" asp-page="/Reviews/Index">Mina Recensioner</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" asp-page="/Carts/Index">Min Kundvagn(<partial name="_itemsInCart" /> )</a>
+                        </li>
+                    }
                     <li><partial name="_LoginPartial" /></li>
-            </ul>
-        </nav>
+                </ul>
+            </nav>
     </header>
 
     <main role="main">
-        @System.Globalization.CultureInfo.CurrentUICulture
         <div class="container">
             @RenderBody()
         </div>
